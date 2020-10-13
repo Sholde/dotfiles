@@ -8,13 +8,18 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(inhibit-startup-screen t)
- '(package-selected-packages '(rust-mode auto-complete)))
+ '(package-selected-packages '(yaml-mode rust-mode auto-complete)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; my scilab support
+(load "~/.highlight-scilab.el")
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 
 ;; disable useless bar
 (tool-bar-mode 0)

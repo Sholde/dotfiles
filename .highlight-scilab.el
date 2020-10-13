@@ -5,8 +5,8 @@
       '(
 	("function\\|endfunction" 						  . font-lock-keyword-face)
 	("for\\|while\\|if\\|else\\|end"					  . font-lock-keyword-face)
-	("@"    								  . font-lock-type-face)
-	("[[:blank:]\-][0-9]+"                            				  . font-lock-constant-face)))
+	("//.*\n"    								  . font-lock-type-face)
+	("\-?[0-9]+"                         				  . font-lock-constant-face)))
 
 ;; Handling comments // ...
 (setq scilab-mode-syntax-table

@@ -17,7 +17,7 @@
  )
 
 ;; my scilab support
-(load "~/.highlight-scilab.el")
+(load "~/.emacs.d/own-mode/highlight-scilab.el")
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 

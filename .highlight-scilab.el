@@ -3,10 +3,21 @@
 ;; Handling keywords and symbols
 (setq scilab-highlights
       '(
-	("function\\|endfunction" 						  . font-lock-keyword-face)
-	("for\\|while\\|if\\|else\\|end"					  . font-lock-keyword-face)
-	("//.*\n"    								  . font-lock-type-face)
-	("\-?[0-9]+"                         				  . font-lock-constant-face)))
+	;; Type
+	("function\\|endfunction" 						  . font-lock-type-face)
+
+	;; Keyword
+	("for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return"            . font-lock-keyword-face)
+	("select\\|case\\|global\\|try\\|catch"                         	  . font-lock-keyword-face)
+
+	;; String
+	("'.'"                                                                    . font-lock-string-face)
+
+	;; Comment
+	("//.*\n"    								  . font-lock-comment-face)
+	
+	;; Constant / Number
+	("[\s\t\n][0-9]+"               				          . font-lock-constant-face)))
 
 ;; Handling comments // ...
 (setq scilab-mode-syntax-table

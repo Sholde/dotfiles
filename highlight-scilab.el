@@ -7,7 +7,7 @@
 	("\\(^function[[:space:][:blank:]]\\|^endfunction$\\)"		          . font-lock-type-face)
 
 	;; Keyword
-	("[[:space:][:blank:]]\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)[[:space:][:blank:]]"                        . font-lock-keyword-face)
+	("[[:space:][:blank:]]\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)[[:space:][:blank:]\n]"                        . font-lock-keyword-face)
 
 	;; String
 	("'.'"                                                                    . font-lock-string-face)

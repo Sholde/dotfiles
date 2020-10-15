@@ -4,21 +4,24 @@
 (setq scilab-highlights
       '(
 	;; Type
-	("\\(^function[[:space:][:blank:]]\\|^endfunction$\\)"			  . font-lock-type-face)
+	("\\(^function[[:space:][:blank:]]\\|^endfunction$\\)"		          . font-lock-type-face)
 
 	;; Keyword
-	("[[:blank:]\s\t\n ]\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)[[:blank:]\s\t\n ]"                         	  . font-lock-keyword-face)
+	("[[:space:][:blank:]]\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)[[:space:][:blank:]]"                        . font-lock-keyword-face)
 
 	;; String
 	("'.'"                                                                    . font-lock-string-face)
 
 	;; Comment
 	("//.*\n"    								  . font-lock-comment-face)
+
+	;; Function
+	("[[:space:][:blank:]]\\(exec\\|diff\\|comp\\|print\\)"                   . font-lock-function-name-face)
 	
 	;; Constant / Number
-	("[[:blank:]\s\t\n ][0-9]+\\(\\.[0-9]+\\)?"                     	  . font-lock-constant-face)))
+	("[0-9]+\\(\\.[0-9]+\\)?"                     	                          . font-lock-constant-face)))
 
-;; Handling comments // ...
+;; Handling comments # ...
 (setq scilab-mode-syntax-table
       	(let ( (synTable1 (make-syntax-table)))
         (modify-syntax-entry ?# "<" synTable1)

@@ -35,8 +35,9 @@
 (require 'auto-complete)
 (ac-config-default)
 
-;; enable rust-mode
-(require 'rust-mode)
+;; company
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; begin new line above
 (defun my/begin-line-above (times)
@@ -81,6 +82,7 @@
 ;; auto fill with back slash le end of line when it too long to display
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
+;; font
 (add-to-list 'default-frame-alist
 	     '(font . "DejaVu Sans Mono-11"))
 

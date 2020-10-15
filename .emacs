@@ -16,11 +16,6 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; my scilab support
-(load "~/.emacs.d/own-mode/highlight-scilab.el")
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
-
 ;; disable useless bar
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -30,6 +25,11 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+
+;; my scilab support
+(load "~/.emacs.d/own-mode/highlight-scilab.el")
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 
 ;; auto-complete
 (require 'auto-complete)
@@ -71,7 +71,7 @@
 
 ;; line numbers
 (column-number-mode t)
-(when (version<= "26.0.50" emacs-version)
+(when (version<= "24.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
 ;; parenthesis highlight

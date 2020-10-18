@@ -35,10 +35,6 @@
 (require 'auto-complete)
 (ac-config-default)
 
-;; company
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-
 ;; begin new line above
 (defun my/begin-line-above (times)
   (interactive "p") ; Calleb from M-x

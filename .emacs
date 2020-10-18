@@ -26,14 +26,14 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;; auto-complete
+(require 'auto-complete)
+(ac-config-default)
+
 ;; my scilab support
 (load "~/.emacs.d/own-mode/highlight-scilab.el")
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
-
-;; auto-complete
-(require 'auto-complete)
-(ac-config-default)
 
 ;; begin new line above
 (defun my/begin-line-above (times)
@@ -75,7 +75,7 @@
 (show-paren-mode 1)
 (setq show-paren-style 'mixed)
 
-;; auto fill with back slash le end of line when it too long to display
+;; auto fill with back slash the end of line when it too long to display
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; font

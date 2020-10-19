@@ -26,13 +26,14 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;; badwolf theme
 (load-theme 'badwolf t)
 
 ;; auto-complete
 (require 'auto-complete)
 (ac-config-default)
 
-;; my scilab support
+;; my scilab highlighting
 (load "~/.emacs.d/own-mode/highlight-scilab.el")
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
@@ -70,7 +71,7 @@
 
 ;; line numbers
 (column-number-mode t)
-(when (version<= "24.0.50" emacs-version)
+(when (version<= "26.0.50" emacs-version)
   (global-display-line-numbers-mode))
 
 ;; parenthesis highlight

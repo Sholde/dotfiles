@@ -26,6 +26,8 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+(load-theme 'badwolf t)
+
 ;; auto-complete
 (require 'auto-complete)
 (ac-config-default)

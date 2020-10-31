@@ -33,6 +33,9 @@
 (require 'auto-complete)
 (ac-config-default)
 
+(load "~/.emacs.d/auto-complete-latex.el")
+(require 'auto-complete-latex)
+
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/highlight-scilab.el")
 (require 'yaml-mode)

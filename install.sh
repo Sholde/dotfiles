@@ -14,3 +14,4 @@ cp -rf auto-complete-latex.el ~/.emacs.d/auto-complete-latex.el
 echo "You need to install manually these packages :"
 echo "- auto-complete"
 echo "- yaml-mode"
+echo "- badwolf-theme"

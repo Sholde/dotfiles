@@ -29,6 +29,9 @@
 ;; badwolf theme
 (load-theme 'badwolf t)
 
+;; cmake
+(require 'cmake-mode)
+
 ;; auto-complete
 (require 'auto-complete)
 (ac-config-default)

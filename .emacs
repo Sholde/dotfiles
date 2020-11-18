@@ -36,6 +36,7 @@
 (require 'auto-complete)
 (ac-config-default)
 
+;; latex completion
 (load "~/.emacs.d/auto-complete-latex.el")
 (require 'auto-complete-latex)
 

@@ -2,7 +2,7 @@ show=@
 
 all: clean install
 
-install: .emacs highlight-scilab.el auto-complete-latex.el
+install: .emacs scilab-mode.el auto-complete-latex.el
 	$(show) ./install.sh
 
 clean:

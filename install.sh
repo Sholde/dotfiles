@@ -12,6 +12,6 @@ cp -rf auto-complete-latex.el ~/.emacs.d/auto-complete-latex.el
 
 # message
 echo "You need to install manually these packages :"
-echo "- auto-complete"
-echo "- cmake-mode"
-echo "- badwolf-theme"
+echo -e "\t- auto-complete"
+echo -e "\t- cmake-mode"
+echo -e "\t- badwolf-theme"

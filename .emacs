@@ -41,8 +41,8 @@
 (require 'auto-complete-latex)
 
 ;; my scilab highlighting
-(load "~/.emacs.d/own-mode/highlight-scilab.el")
-(require 'yaml-mode)
+(load "~/.emacs.d/own-mode/scilab-mode.el")
+;;(require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 
 ;; begin new line above

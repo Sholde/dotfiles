@@ -42,7 +42,6 @@
 
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
-;;(require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 
 ;; begin new line above
@@ -51,6 +50,7 @@
   (move-beginning-of-line 1)
   (save-excursion
     (newline times)))
+
 (global-set-key (kbd "M-o")
 		'my/begin-line-above)
 
@@ -59,14 +59,11 @@
   (interactive "p") ; Calleb from M-x
   (move-end-of-line 1)
   (newline times))
+
 (global-set-key (kbd "C-o")
 		'my/begin-line-beside)
 
 ;; some control
-(global-set-key [f2] 'save-buffer)
-(global-set-key [f3] 'find-file)
-(global-set-key [f4] 'kill-this-buffer)
-(global-set-key [f9] 'compile)
 (global-set-key [(control z)] 'undo)
 (global-set-key [(meta g)] 'goto-line)
 

@@ -3,12 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(inhibit-startup-screen t)
- '(package-selected-packages '(yaml-mode rust-mode auto-complete)))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -66,6 +61,10 @@
 ;; some control
 (global-set-key [(control z)] 'undo)
 (global-set-key [(meta g)] 'goto-line)
+(global-set-key (kbd "M-n")
+		(lambda () (interactive) (next-line 5)))
+(global-set-key (kbd "M-p")
+		(lambda () (interactive) (previous-line 5)))
 
 ;; show error (and not make sound)
 (setq visible-bell t)

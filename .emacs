@@ -16,29 +16,6 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
-;; enable melpa repo
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-;; badwolf theme
-(load-theme 'badwolf t)
-
-;; cmake
-(require 'cmake-mode)
-
-;; auto-complete
-(require 'auto-complete)
-(ac-config-default)
-
-;; latex completion
-(load "~/.emacs.d/auto-complete-latex.el")
-(require 'auto-complete-latex)
-
-;; my scilab highlighting
-(load "~/.emacs.d/own-mode/scilab-mode.el")
-(add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
-
 ;; begin new line above
 (defun my/begin-line-above (times)
   (interactive "p") ; Calleb from M-x
@@ -87,4 +64,27 @@
 ;; font
 (add-to-list 'default-frame-alist
 	     '(font . "DejaVu Sans Mono-11"))
+
+;; enable melpa repo
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+;; badwolf theme
+(load-theme 'badwolf t)
+
+;; cmake
+(require 'cmake-mode)
+
+;; auto-complete
+(require 'auto-complete)
+(ac-config-default)
+
+;; latex completion
+(load "~/.emacs.d/auto-complete-latex.el")
+(require 'auto-complete-latex)
+
+;; my scilab highlighting
+(load "~/.emacs.d/own-mode/scilab-mode.el")
+(add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 

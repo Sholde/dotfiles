@@ -2,17 +2,17 @@
 ;; Handling keywords and symbols
 (setq scilab-highlights
       '(
+	;; Comment
+	("//.*$"    								  . font-lock-comment-face)
+
 	;; Type
-	("\\(function\\|endfunction\\)"                   		          . font-lock-type-face)
+	("\\(function\\|endfunction\\)[[:space:]$]"                   		          . font-lock-type-face)
 
 	;; Keyword
-	("\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)"                        . font-lock-keyword-face)
+	("\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)[[:space:]$]"                        . font-lock-keyword-face)
 
 	;; String
 	("'.'"                                                                    . font-lock-string-face)
-
-	;; Comment
-	("//.*$"    								  . font-lock-comment-face)
 
 	;; Function
 	("\\(exec\\|diff\\|comp\\|print\\|exp\\|abs\\|log\\|printf\\)"            . font-lock-function-name-face)
@@ -23,9 +23,9 @@
 ;; Defining scilab-mode
 (define-derived-mode scilab-mode fundamental-mode "scilab"
   "major mode for editing scilab language code."
-  (setq font-lock-defaults '(scilab-highlights))
-  (make-local-variable 'scilab-indent-offset)
-  (set (make-local-variable 'indent-line-function) 'scilab-indent-line))
+  (setq font-lock-defaults '(scilab-highlights)))
+;;  (make-local-variable 'scilab-indent-offset))
+;;  (set (make-local-variable 'indent-line-function) 'scilab-indent-line))
 
 ;; tab width
 (defvar scilab-indent-offset 4

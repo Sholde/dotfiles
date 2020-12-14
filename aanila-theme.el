@@ -44,7 +44,7 @@
  '(which-func ((t (:inherit mode-line))))
  '(fringe ((t (:background "#111" :foreground "#444"))))
  '(linum ((t (:background "gray10" :foreground "dim gray"))))
- '(region ((t (:foreground "cyan" :background "dark cyan"))))
+ '(region ((t (:background "gray11"))))
  '(highlight ((t (:foreground "#f2f2f2" :background "#141414"))))
  '(show-paren-match ((t (:background "#1f1f1f"))))
  '(highlight-changes ((t (:foreground nil :background "midnight blue"))))
@@ -54,11 +54,11 @@
 
  ;; All font locks
  '(font-lock-builtin-face ((t (:foreground "LightSteelBlue"))))
- '(font-lock-comment-face ((t (:foreground "gray" :italic t ))))
+ '(font-lock-comment-face ((t (:foreground "gray50" :italic t ))))
  '(font-lock-constant-face ((t (:foreground "indianred"))))
  '(font-lock-doc-string-face ((t (:foreground "SeaGreen2" :bold t))))
  '(font-lock-keyword-face ((t (:foreground "SkyBlue" :bold t))))
- '(font-lock-preprocessor-face ((t (:foreground "sky blue" :background "gray10"))))
+ '(font-lock-preprocessor-face ((t (:foreground "sky blue" ))))
  '(font-lock-reference-face ((t (:foreground "blue"))))
  '(font-lock-string-face ((t (:foreground "DarkSlateGray2"))))
  '(font-lock-function-name-face ((t (:foreground "steelblue"))))

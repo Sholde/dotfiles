@@ -16,6 +16,10 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
+;; theme
+(load "~/.emacs.d/aanila-theme.el")
+(load-theme 'aanila t)
+
 ;; begin new line above
 (defun my/begin-line-above (times)
   (interactive "p") ; Calleb from M-x
@@ -69,9 +73,6 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-
-;; badwolf theme
-(load-theme 'badwolf t)
 
 ;; cmake
 (require 'cmake-mode)

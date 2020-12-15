@@ -46,7 +46,7 @@
  '(linum ((t (:background "gray10" :foreground "dim gray"))))
  '(region ((t (:background "gray11"))))
  '(highlight ((t (:foreground "#f2f2f2" :background "#141414"))))
- '(show-paren-match ((t (:background "#1f1f1f"))))
+ '(show-paren-match ((t (:foreground "orange"))))
  '(highlight-changes ((t (:foreground nil :background "midnight blue"))))
  '(highlight-changes-delete ((t (:foreground nil :background "chocolate4" :underline nil))))
  '(hl-line ((t (:background "#404040"))))

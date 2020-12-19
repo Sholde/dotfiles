@@ -7,7 +7,8 @@ emacs --batch --eval "(progn
 			     (package-refresh-contents)
 			     (package-install 'auto-complete)
 			     (package-install 'cmake-mode)
-			     (package-install 'org))"
+			     (package-install 'org)
+			     (package-install 'badwolf-theme))"
 
 # aanila theme
 cp aanila-theme.el ~/.emacs.d/aanila-theme.el

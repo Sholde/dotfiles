@@ -10,7 +10,7 @@ emacs --batch --eval "(progn
 			     (package-install 'org))"
 
 # aanila theme
-cp aanila-theme.el ~/.emacs.d/aanila-theme.el
+cp -rf aanila-theme.el ~/.emacs.d/aanila-theme.el
 
 # scilab
 mkdir -p ~/.emacs.d/own-mode

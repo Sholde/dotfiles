@@ -63,7 +63,14 @@
 (setq show-paren-style 'mixed)
 
 ;; auto fill with back slash the end of line when it too long to display
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(setq-default fill-column 80)
+(setq-default fill-column-indicator 80)
+(setq-default indent-tabs-mode nil)
+;; if indent-tabs-mode is off, untabify before saving
+(add-hook 'write-file-hooks
+	  (lambda () (if (not indent-tabs-mode)
+			 (untabify (point-min) (point-max)))
+	    nil ))
 
 ;; font
 (add-to-list 'default-frame-alist

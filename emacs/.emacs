@@ -18,7 +18,7 @@
 
 ;; theme
 ;;(load "~/.emacs.d/aanila-theme.el")
-(load-theme 'badwolf t)
+(load-theme 'aanila t)
 
 ;; begin new line above
 (defun my/begin-line-above (times)
@@ -28,7 +28,7 @@
     (newline times)))
 
 (global-set-key (kbd "M-o")
-		'my/begin-line-above)
+                'my/begin-line-above)
 
 ;; begin new line beside
 (defun my/begin-line-beside (times)
@@ -37,15 +37,15 @@
   (newline times))
 
 (global-set-key (kbd "C-o")
-		'my/begin-line-beside)
+                'my/begin-line-beside)
 
 ;; some control
 (global-set-key [(control z)] 'undo)
 (global-set-key [(meta g)] 'goto-line)
 (global-set-key (kbd "M-n")
-		(lambda () (interactive) (next-line 5)))
+                (lambda () (interactive) (next-line 5)))
 (global-set-key (kbd "M-p")
-		(lambda () (interactive) (previous-line 5)))
+                (lambda () (interactive) (previous-line 5)))
 
 ;; show error (and not make sound)
 (setq visible-bell t)
@@ -66,20 +66,38 @@
 (setq-default fill-column 80)
 (setq-default fill-column-indicator 80)
 (setq-default indent-tabs-mode nil)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 ;; if indent-tabs-mode is off, untabify before saving
 (add-hook 'write-file-hooks
-	  (lambda () (if (not indent-tabs-mode)
-			 (untabify (point-min) (point-max)))
-	    nil ))
+          (lambda () (if (not indent-tabs-mode)
+                         (untabify (point-min) (point-max)))
+            nil ))
 
 ;; font
 (add-to-list 'default-frame-alist
-	     '(font . "DejaVu Sans Mono-11"))
+             '(font . "DejaVu Sans Mono-11"))
 
 ;; enable melpa repo
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
+
+;; list the packages you want
+(setq package-list '(cmake-mode auto-complete))
+
+;; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+        (package-install package)))
 
 ;; cmake
 (require 'cmake-mode)
@@ -95,4 +113,3 @@
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
-

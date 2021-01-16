@@ -2,13 +2,6 @@
 
 # .emacs
 cp -rf .emacs ~/.emacs
-emacs --batch --eval "(progn 
-                             (package-initialize) 
-                             (package-refresh-contents)
-                             (package-install 'badwolf-theme)
-                             (package-install 'auto-complete)
-                             (package-install 'cmake-mode)
-                             (package-install 'org))"
 
 # aanila theme
 cp -rf aanila-theme.el ~/.emacs.d/aanila-theme.el

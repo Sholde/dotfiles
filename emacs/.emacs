@@ -18,7 +18,7 @@
 
 ;; theme
 ;;(load "~/.emacs.d/aanila-theme.el")
-(load-theme 'aanila t)
+(load-theme 'badwolf t)
 
 ;; begin new line above
 (defun my/begin-line-above (times)

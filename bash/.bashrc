@@ -46,6 +46,11 @@ alias free='free -m'                      # show sizes in MB
 alias more="less"                         # less is better
 alias np='nano -w PKGBUILD'
 
+# work
+alias cdmaster="cd ~/dev/master"
+alias cdaur="cd ~/dev/aur"
+alias cdperso="cd ~/dev/perso"
+
 # list
 alias ll="ls -l"
 alias la="ls -a"

@@ -32,7 +32,10 @@ parse_git_branch()
 if [[ ${EUID} == 0 ]] ; then
     PS1='[\u@\h \W]$(parse_git_branch) \$ '
 else
+    # PS1
     PS1='\[\033[01;32m\][\u@\h \[\033[1;34m\]\W \[\033[01;32m\]]\[\033[1;31m\]$(parse_git_branch) \[\033[01;32m\]\$\[\033[00m\] '
+
+    # Color alias
     alias ls='ls --color=auto'
     alias grep='grep --colour=auto'
     alias egrep='egrep --colour=auto'
@@ -150,6 +153,16 @@ ex ()
 }
 
 # export
+
+# # man and less color
+export LESS_TERMCAP_md=$'\e[01;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[01;32m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[45;93m'
+export LESS_TERMCAP_se=$'\e[0m'
+
+# # other
 export EDITOR="emacs -nw"
 export PYTHONPATH="/usr/local/lib/python3.8/site-packages"
 export VFC_BACKENDS="libinterflop_ieee.so"

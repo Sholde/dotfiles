@@ -53,6 +53,7 @@ alias np='nano -w PKGBUILD'
 alias cdmaster="cd ~/dev/master"
 alias cdaur="cd ~/dev/aur"
 alias cdperso="cd ~/dev/perso"
+alias cdverificarlo="cd ~/dev/master/projet/verificarlo"
 
 # list
 alias ll="ls -l"

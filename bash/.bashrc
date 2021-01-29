@@ -102,7 +102,7 @@ transfr() {
 }
 
 # search expression in all file here
-sword() {
+search() {
     grep -re "$1" *
 }
 
@@ -165,5 +165,21 @@ export LESS_TERMCAP_se=$'\e[0m'
 
 # # other
 export EDITOR="emacs -nw"
+
+# # Verificarlo
 export PYTHONPATH="/usr/local/lib/python3.8/site-packages"
 export VFC_BACKENDS="libinterflop_ieee.so"
+
+setenvcarlo()
+{
+    export OMPI_CC="verificarlo-c"
+    export OMPI_CXX="verificarlo-c++"
+    export OMPI_F="verificarlo-f"
+}
+
+unsetenvcarlo()
+{
+    unset OMPI_CC
+    unset OMPI_CXX
+    unset OMPI_F
+}

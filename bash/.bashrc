@@ -170,14 +170,14 @@ export EDITOR="emacs -nw"
 export PYTHONPATH="/usr/local/lib/python3.8/site-packages"
 export VFC_BACKENDS="libinterflop_ieee.so"
 
-setenvcarlo()
+setmpicarlo()
 {
     export OMPI_CC="verificarlo-c"
     export OMPI_CXX="verificarlo-c++"
     export OMPI_F="verificarlo-f"
 }
 
-unsetenvcarlo()
+unsetmpicarlo()
 {
     unset OMPI_CC
     unset OMPI_CXX

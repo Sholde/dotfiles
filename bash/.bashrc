@@ -166,6 +166,10 @@ export LESS_TERMCAP_se=$'\e[0m'
 # # other
 export EDITOR="emacs -nw"
 
+# # PATH
+export PATH=$PATH:/opt/spack/bin
+export PATH=$PATH:/usr/local/mpich-3.4.1/bin
+
 # # Verificarlo
 export PYTHONPATH="/usr/local/lib/python3.8/site-packages"
 export VFC_BACKENDS="libinterflop_ieee.so"

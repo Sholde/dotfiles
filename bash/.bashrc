@@ -167,8 +167,52 @@ export LESS_TERMCAP_se=$'\e[0m'
 export EDITOR="emacs -nw"
 
 # # PATH
-export PATH=$PATH:/opt/spack/bin
-export PATH=$PATH:/usr/local/mpich-3.4.1/bin
+if ! echo $PATH | grep -q /opt/spack/bin ; then
+    export PATH=$PATH:/opt/spack/bin
+fi
+
+# # # MPICH
+mpich_path=/usr/local/mpich-3.4.1/bin
+
+# Load MPICH
+loadmpich()
+{
+    # Case load
+    if echo $PATH | grep -q $mpich_path ; then
+        echo "MPICH is already load!"
+    # Case is not load
+    else
+        export PATH=$PATH:$mpich_path
+        echo "MPICH load!"
+    fi
+}
+
+# Unload MPICH
+# Use + on sed because we use path, therefore we have slash (/) on our expresion
+# and it not match
+unloadmpich()
+{
+    # Case :path:
+    if echo $PATH | grep -q ":"$mpich_path":" ; then
+        export PATH=$(echo $PATH | sed -e "s+:$mpich_path:+:+g")
+        echo "MPICH unload!"
+    # Case :path
+    elif echo $PATH | grep -q ":"$mpich_path ; then
+        export PATH=$(echo $PATH | sed -e "s+:$mpich_path++g")
+        echo "MPICH unload!"
+    # Case path:
+    elif echo $PATH | grep -q $mpich_path":" ; then
+        export PATH=$(echo $PATH | sed -e "s+$mpich_path:++g")
+        echo "MPICH unload!"
+    # Case path
+    elif echo $PATH | grep -q $mpich_path ; then
+        export PATH=$(echo $PATH | sed -e "s+$mpich_path++g")
+        echo "MPICH unload!"
+    # Case is not load
+    else
+        echo "MPICH is NOT load!"
+    fi
+}
 
 # # Verificarlo
 export PYTHONPATH="/usr/local/lib/python3.8/site-packages"

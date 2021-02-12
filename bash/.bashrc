@@ -182,7 +182,7 @@ loadmpich()
         echo "MPICH is already load!"
     # Case is not load
     else
-        export PATH=$PATH:$mpich_path
+        export PATH=$mpich_path:$PATH
         echo "MPICH load!"
     fi
 }

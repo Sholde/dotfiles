@@ -13,6 +13,6 @@ cp -rf scilab-mode.el ~/.emacs.d/own-mode/scilab-mode.el
 # latex
 cp -rf auto-complete-latex.el ~/.emacs.d/auto-complete-latex.el
 
-# latex
-cp -rf auto-complete-mpi.el ~/.emacs.d/auto-complete-mpi.el
+# mpi
+cp -rf auto-complete-mpi.el ~/.emacs.d/own-mode/auto-complete-mpi.el
 

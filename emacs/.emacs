@@ -111,7 +111,7 @@
 (require 'auto-complete-latex)
 
 ;; mpi completion
-(load "~/.emacs.d/auto-complete-mpi.el")
+(load "~/.emacs.d/own-mode/auto-complete-mpi.el")
 (require 'auto-complete-mpi)
 
 ;; my scilab highlighting

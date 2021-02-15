@@ -110,6 +110,10 @@
 (load "~/.emacs.d/auto-complete-latex.el")
 (require 'auto-complete-latex)
 
+;; mpi completion
+(load "~/.emacs.d/auto-complete-mpi.el")
+(require 'auto-complete-mpi)
+
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))

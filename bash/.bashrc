@@ -9,6 +9,15 @@
 figlet sholde
 neofetch
 
+learn()
+{
+    LINE=$(echo "$RANDOM % 3000 + 1" | bc)
+    WORD=$(cat ~/english.txt | sed -n $LINE"p")
+    trans -s en -t fr -e bing "$WORD"
+}
+
+learn
+
 # Bash completion
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 

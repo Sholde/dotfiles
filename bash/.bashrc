@@ -7,16 +7,18 @@
 
 # Display new terminal message
 figlet sholde
-neofetch
 
-learn()
-{
-    LINE=$(echo "$RANDOM % 3000 + 1" | bc)
-    WORD=$(cat ~/english.txt | sed -n $LINE"p")
-    trans -s en -t fr -e bing "$WORD"
-}
-
-learn
+## Check update
+pacman -Qu
+if [ $? != 1 ] ; then
+    echo -en "\033[01;32m"
+    echo -n "Some update are available!"
+    echo -e "\033[00m"
+else
+    echo -en "\033[1;31m"
+    echo -n "No update availble!"
+    echo -e "\033[00m"
+fi
 
 # Bash completion
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
@@ -113,6 +115,13 @@ transfr() {
 # search expression in all file here
 search() {
     grep -re "$1" *
+}
+
+learn()
+{
+    LINE=$(echo "$RANDOM % 3000 + 1" | bc)
+    WORD=$(cat ~/english.txt | sed -n $LINE"p")
+    trans -s en -t fr -e bing "$WORD"
 }
 
 # UI

@@ -166,7 +166,7 @@ export LESS_TERMCAP_md=$'\e[01;31m'
 export LESS_TERMCAP_me=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[01;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[45;93m'
+export LESS_TERMCAP_so=$'\e[47;30m'
 export LESS_TERMCAP_se=$'\e[0m'
 
 # # other
@@ -224,14 +224,14 @@ unloadmpich()
 export PYTHONPATH="/usr/local/lib/python3.8/site-packages"
 export VFC_BACKENDS="libinterflop_ieee.so"
 
-setmpicarlo()
+setompicarlo()
 {
     export OMPI_CC="verificarlo-c"
     export OMPI_CXX="verificarlo-c++"
     export OMPI_F="verificarlo-f"
 }
 
-unsetmpicarlo()
+unsetompicarlo()
 {
     unset OMPI_CC
     unset OMPI_CXX

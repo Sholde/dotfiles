@@ -114,6 +114,10 @@
 (load "~/.emacs.d/own-mode/auto-complete-mpi.el")
 (require 'auto-complete-mpi)
 
+;; pthread completion
+(load "~/.emacs.d/own-mode/auto-complete-pthread.el")
+(require 'auto-complete-pthread)
+
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))

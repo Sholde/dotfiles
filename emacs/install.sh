@@ -16,3 +16,6 @@ cp -rf auto-complete-latex.el ~/.emacs.d/auto-complete-latex.el
 # mpi
 cp -rf auto-complete-mpi.el ~/.emacs.d/own-mode/auto-complete-mpi.el
 
+# mpi
+cp -rf auto-complete-pthread.el ~/.emacs.d/own-mode/auto-complete-pthread.el
+

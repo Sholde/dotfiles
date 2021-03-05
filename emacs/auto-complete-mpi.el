@@ -9,7 +9,8 @@
 
 (defvar ac-mpi-sources
   '(
-    ac-mpi-source-basic-commands
+    ac-mpi-source-functions
+    ac-mpi-source-keywords
     ))
 
 (defun ac-mpi-setup ()
@@ -34,14 +35,14 @@
      '((candidates . (lambda () (all-completions ac-prefix ,list)))
        )))
 
-;; user keywords (command, option or varoable)
+;; user keywords (command, option or variable)
 (ac-mpi-define-dictionary-source
  ac-mpi-source-user-keywords
  ac-mpi-source-user-keywords*)
 
 ;; mpi basic function
 (ac-mpi-define-dictionary-source
- ac-mpi-source-basic-commands
+ ac-mpi-source-functions
  '(;;Environment Management Routines
    "MPI_Abort" "MPI_Errhandler_create*"  "MPI_Errhandler_free" "MPI_Errhandler_get*"
    "MPI_Errhandler_set*" "MPI_Error_class" "MPI_Error_string" "MPI_Finalize"
@@ -84,8 +85,16 @@
    "MPI_Address*" "MPI_Attr_delete*" "MPI_Attr_get*" "MPI_Attr_put*"
    "MPI_Keyval_create*" "MPI_Keyval_free*" "MPI_Pack" "MPI_Pack_size"
    "MPI_Pcontrol" "MPI_Unpack"
-   ;;Communicator
-   "MPI_COMM_WORLD" "MPI_COMM_SELF"
+   ))
+
+;; mpi basic keywords
+(ac-mpi-define-dictionary-source
+ ac-mpi-source-keywords
+ '(;;Communicator
+   "MPI_COMM_NULL" "MPI_COMM_WORLD" "MPI_COMM_SELF"
+   ;;Operation
+   "MPI_OP_NULL" "MPI_MAX" "MPI_MIN" "MPI_SUM" "MPI_PROD" "MPI_LAND" "MPI_BAND"
+   "MPI_LOR" "MPI_BOR" "MPI_LXOR" "MPI_BXOR" "MPI_MINLOC" "MPI_MAXLOC" "MPI_REPLACE"
    ;;Type
    "MPI_CHAR" "MPI_SIGNED_CHAR" "MPI_UNSIGNED_CHAR" "MPI_BYTE" "MPI_WCHAR" "MPI_SHORT"
    "MPI_UNSIGNED_SHORT" "MPI_INT" "MPI_UNSIGNED" "MPI_LONG" "MPI_UNSIGNED_LONG" "MPI_FLOAT"
@@ -95,5 +104,5 @@
    "MPI_ERRORS_ARE_FATAL" "MPI_ERRORS_RETURN"
    ))
 
-
-(provide'auto-complete-mpi)
+;; Enable mpi-mode
+(provide 'auto-complete-mpi)

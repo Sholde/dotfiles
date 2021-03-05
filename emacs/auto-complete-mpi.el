@@ -84,6 +84,15 @@
    "MPI_Address*" "MPI_Attr_delete*" "MPI_Attr_get*" "MPI_Attr_put*"
    "MPI_Keyval_create*" "MPI_Keyval_free*" "MPI_Pack" "MPI_Pack_size"
    "MPI_Pcontrol" "MPI_Unpack"
+   ;;Communicator
+   "MPI_COMM_WORLD" "MPI_COMM_SELF"
+   ;;Type
+   "MPI_CHAR" "MPI_SIGNED_CHAR" "MPI_UNSIGNED_CHAR" "MPI_BYTE" "MPI_WCHAR" "MPI_SHORT"
+   "MPI_UNSIGNED_SHORT" "MPI_INT" "MPI_UNSIGNED" "MPI_LONG" "MPI_UNSIGNED_LONG" "MPI_FLOAT"
+   "MPI_DOUBLE" "MPI_LONG_DOUBLE" "MPI_LONG_LONG_INT" "MPI_UNSIGNED_LONG_LONG"
+   "MPI_LONG_LONG" "MPI_LONG_LONG_INT"
+   ;;Error
+   "MPI_ERRORS_ARE_FATAL" "MPI_ERRORS_RETURN"
    ))
 
 

@@ -1,24 +1,25 @@
+;; scilab mode
 
 ;; Handling keywords and symbols
 (setq scilab-highlights
       '(
-	;; Comment
-	("//.*$"    								  . font-lock-comment-face)
+        ;; Comment
+        ("//.*$"                                                                  . font-lock-comment-face)
 
-	;; Type
-	("\\(function\\|endfunction\\)[[:space:]$]"                   		          . font-lock-type-face)
+        ;; Type
+        ("\\<\\(function\\|endfunction\\)\\>"                                     . font-lock-type-face)
 
-	;; Keyword
-	("\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)[[:space:]$]"                        . font-lock-keyword-face)
+        ;; Keyword
+        ("\\<\\(for\\|while\\|if\\|then\\|else\\|elseif\\|end\\|do\\|return\\|select\\|case\\|global\\|try\\|catch\\)\\>"                        . font-lock-keyword-face)
 
-	;; String
-	("'.'"                                                                    . font-lock-string-face)
+        ;; String
+        ("'.'"                                                                    . font-lock-string-face)
 
-	;; Function
-	("\\(exec\\|diff\\|comp\\|print\\|exp\\|abs\\|log\\|printf\\)"            . font-lock-function-name-face)
-	
-	;; Constant / Number
-	("[0-9]+\\(\\.[0-9]+\\)?\\(\\:[0-9]+\\(\\.[0-9]+\\)?\\)*"                  . font-lock-constant-face)))
+        ;; Function
+        ("\\<\\(exec\\|diff\\|comp\\|print\\|exp\\|abs\\|log\\|printf\\)\\>"      . font-lock-function-name-face)
+        
+        ;; Constant / Number
+        ("[0-9]+\\(\\.[0-9]+\\)?\\(\\:[0-9]+\\(\\.[0-9]+\\)?\\)*"                 . font-lock-constant-face)))
 
 ;; Defining scilab-mode
 (define-derived-mode scilab-mode fundamental-mode "scilab"
@@ -41,12 +42,12 @@
       (condition-case nil
           (while t
             (backward-up-list 1)
-            (when (looking-at "function")
+            (when (looking-at "\\<function\\>")
               (setq indent-col (+ indent-col scilab-indent-offset))))
         (error nil)))
     (save-excursion
       (back-to-indentation)
-      (when (and (looking-at "endfunction") (>= indent-col scilab-indent-offset))
+      (when (and (looking-at "\\<endfunction\\>") (>= indent-col scilab-indent-offset))
         (setq indent-col (- indent-col scilab-indent-offset))))
     (indent-line-to indent-col)))
-
+    

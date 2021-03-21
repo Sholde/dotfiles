@@ -73,7 +73,7 @@
                          (untabify (point-min) (point-max)))
             nil ))
 
-;; font
+;; Font
 (add-to-list 'default-frame-alist
              '(font . "DejaVu Sans Mono-11"))
 
@@ -121,3 +121,6 @@
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
+
+;; auto insert pair
+(electric-pair-mode 1)

@@ -177,6 +177,9 @@ if ! echo $PATH | grep -q /opt/spack/bin ; then
     export PATH=$PATH:/opt/spack/bin
 fi
 
+# # ls color for tar
+export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:*.tar=1;31:*.gz=1;31:*.tbz2=1;31"
+
 # # # MPICH
 mpich_path=/usr/local/mpich-3.4.1/bin
 

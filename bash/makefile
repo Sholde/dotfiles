@@ -1,3 +1,3 @@
 all:
 	cp -rf .bashrc ~/.bashrc
-	cp -rf english.txt ~/english.txt
+	cp -rf .english.txt ~/.english.txt

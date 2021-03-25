@@ -108,7 +108,7 @@ search() {
 learn()
 {
     LINE=$(echo "$RANDOM % 3000 + 1" | bc)
-    WORD=$(cat ~/english.txt | sed -n $LINE"p")
+    WORD=$(cat ~/.english.txt | sed -n $LINE"p")
     trans -s en -t fr -e bing "$WORD"
 }
 

@@ -120,9 +120,18 @@ search() {
 
 learn()
 {
+    # Choose word
     LINE=$(echo "$RANDOM % 3000 + 1" | bc)
     WORD=$(cat ~/.english.txt | sed -n $LINE"p")
-    trans -s en -t fr -e bing "$WORD"
+
+    # Clear terminal
+    clear
+
+    # Display in color the word
+    echo -e $RED$WORD$RESET
+
+    # Translate
+    trans -s en -t fr "$WORD"
 }
 
 # UI
@@ -157,7 +166,7 @@ ex ()
             *.tar.bz2)   tar xjf $1   ;;
             *.tar.gz)    tar xzf $1   ;;
             *.bz2)       bunzip2 $1   ;;
-            *.rar)       unrar x $1     ;;
+            *.rar)       unrar x $1   ;;
             *.gz)        gunzip $1    ;;
             *.tar)       tar xf $1    ;;
             *.tbz2)      tar xjf $1   ;;

@@ -40,12 +40,49 @@ parse_git_branch()
     git branch 2> /dev/null | grep -e '*' | sed -e 's/* \(.*\)/ (\1)/'
 }
 
+# Get time of the last command
+function timer_now {
+    date +%s%N
+}
+
+function timer_start {
+    timer_start=${timer_start:-$(timer_now)}
+}
+
+function timer_stop {
+    local delta_us=$((($(timer_now) - $timer_start) / 1000))
+    local us=$((delta_us % 1000))
+    local ms=$(((delta_us / 1000) % 1000))
+    local s=$(((delta_us / 1000000) % 60))
+    local m=$(((delta_us / 60000000) % 60))
+    local h=$((delta_us / 3600000000))
+    # Goal: always show around 3 digits of accuracy
+    if ((h > 0)); then timer_show=${h}h${m}m
+    elif ((m > 0)); then timer_show=${m}m${s}s
+    elif ((s >= 10)); then timer_show=${s}.$((ms / 100))s
+    elif ((s > 0)); then timer_show=${s}.$(printf %03d $ms)s
+    elif ((ms >= 100)); then timer_show=${ms}ms
+    elif ((ms > 0)); then timer_show=${ms}.$((us / 100))ms
+    else timer_show=${us}us
+    fi
+    unset timer_start
+}
+
+trap 'timer_start' DEBUG
+PROMPT_COMMAND=timer_stop
+
 # Test if colorful terminal is used
 if [[ ${EUID} == 0 ]] ; then
     PS1='[\u@\h \W]$(parse_git_branch) \$ '
 else
     # PS1
-    PS1='\[\033[1;34m\][$?] \[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]\[\033[1;31m\]$(parse_git_branch) \[\033[01;32m\]\$\[\033[00m\] '
+    if [ $(id -u) -eq 0 ] ; then
+        PS1='\[\033[1;34m\][$?] \[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'
+        PS1+='\[\033[1;31m\]$(parse_git_branch) \[\033[1;33m\](${timer_show}) \[\033[1;31m\]#\[\033[00m\] '
+    else
+        PS1='\[\033[1;34m\][$?] \[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'
+        PS1+='\[\033[1;31m\]$(parse_git_branch) \[\033[1;33m\](${timer_show}) \[\033[01;32m\]\$\[\033[00m\] '
+    fi
 
     # Color alias
     alias ls='ls --color=auto'

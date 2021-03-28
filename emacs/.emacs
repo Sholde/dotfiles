@@ -53,10 +53,12 @@
 ;; enable syntax color
 (global-font-lock-mode t)
 
-;; line numbers
+;; Enable column number
 (column-number-mode t)
-(when (version<= "26.0.50" emacs-version)
-  (global-display-line-numbers-mode))
+
+;; Remove column number because it is redondant
+;;(when (version<= "26.0.50" emacs-version)
+;;  (global-display-line-numbers-mode))
 
 ;; parenthesis highlight
 (show-paren-mode 1)

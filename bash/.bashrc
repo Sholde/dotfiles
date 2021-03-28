@@ -308,3 +308,6 @@ unsetompicarlo()
     unset OMPI_CXX
     unset OMPI_F
 }
+
+## History
+export HISTTIMEFORMAT="%F %T "

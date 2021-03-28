@@ -21,6 +21,11 @@ order += "memory"
 order += "volume master"
 order += "tztime local"
 
+ipv6 {
+        format_up = "IPv6"
+        format_down = "no IPv6"
+}
+
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"
         format_down = "W: down"
@@ -36,27 +41,27 @@ battery all {
 }
 
 cpu_usage {
-	format = "CPU: %usage"
-	degraded_threshold = 70
-	max_threshold = 90
+        format = "CPU: %usage"
+        degraded_threshold = 70
+        max_threshold = 90
 }
 
 disk "/" {
         format = "DISK: %used/%total"
-	low_threshold = 10
+        low_threshold = 10
 }
 
 memory {
         format = "RAM: %used/%total"
         threshold_degraded = 50%
-	threshold_critical = 10%
+        threshold_critical = 10%
 }
 
 volume master {
         format = "♪: %volume"
-	format_muted = "♪: muted (%volume)"
-	device = "default"
-	mixer = "Master"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
 }
 
 tztime local {

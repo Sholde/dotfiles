@@ -40,6 +40,12 @@ parse_git_branch()
     git branch 2> /dev/null | grep -e '*' | sed -e 's/* \(.*\)/ (\1)/'
 }
 
+# Parse git status
+function parse_git_status()
+{
+    [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo -n "*"
+}
+
 # Get time of the last command
 function timer_now {
     date +%s%N
@@ -78,10 +84,10 @@ else
     # PS1
     if [ $(id -u) -eq 0 ] ; then
         PS1='\[\033[1;34m\][$?] \[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'
-        PS1+='\[\033[1;31m\]$(parse_git_branch) \[\033[1;33m\](${timer_show}) \[\033[1;31m\]#\[\033[00m\] '
+        PS1+='\[\033[1;31m\]$(parse_git_branch)$(parse_git_status) \[\033[1;33m\](${timer_show}) \[\033[1;31m\]#\[\033[00m\] '
     else
         PS1='\[\033[1;34m\][$?] \[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'
-        PS1+='\[\033[1;31m\]$(parse_git_branch) \[\033[1;33m\](${timer_show}) \[\033[01;32m\]\$\[\033[00m\] '
+        PS1+='\[\033[1;31m\]$(parse_git_branch)$(parse_git_status) \[\033[1;33m\](${timer_show}) \[\033[01;32m\]\$\[\033[00m\] '
     fi
 
     # Color alias

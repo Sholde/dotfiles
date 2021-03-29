@@ -8,19 +8,6 @@
 # Display new terminal message
 figlet sholde
 
-# Display if we have new packages
-new=$(pacman -Sup | wc -l)
-
-GREEN="\033[01;32m"
-RED="\033[1;31m"
-RESET="\033[00m"
-
-if [ new == 0 ] ; then
-    echo -e $GREEN"There are not new packages"$RESET
-else
-    echo -e $RED"There are $new new packages"$RESET
-fi
-
 # Bash completion
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 

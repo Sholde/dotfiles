@@ -16,10 +16,6 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
-;; theme
-;;(load "~/.emacs.d/aanila-theme.el")
-(load-theme 'badwolf t)
-
 ;; begin new line above
 (defun my/begin-line-above (times)
   (interactive "p") ; Calleb from M-x
@@ -90,7 +86,7 @@
 (package-initialize)
 
 ;; list the packages you want
-(setq package-list '(cmake-mode auto-complete))
+(setq package-list '(cmake-mode auto-complete badwolf-theme))
 
 ;; fetch the list of packages available
 (unless package-archive-contents
@@ -123,6 +119,10 @@
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
+
+;; theme
+;;(load "~/.emacs.d/aanila-theme.el")
+(load-theme 'badwolf t)
 
 ;; auto insert pair
 (electric-pair-mode 1)

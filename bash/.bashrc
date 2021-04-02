@@ -22,7 +22,7 @@ case ${TERM} in
 esac
 
 # Parse current git branch
-parse_git_branch()
+function parse_git_branch()
 {
     git branch 2> /dev/null | grep -e '*' | sed -e 's/* \(.*\)/ (\1)/'
 }
@@ -34,15 +34,18 @@ function parse_git_status()
 }
 
 # Get time of the last command
-function timer_now {
+function timer_now()
+{
     date +%s%N
 }
 
-function timer_start {
+function timer_start()
+{
     timer_start=${timer_start:-$(timer_now)}
 }
 
-function timer_stop {
+function timer_stop()
+{
     local delta_us=$((($(timer_now) - $timer_start) / 1000))
     local us=$((delta_us % 1000))
     local ms=$(((delta_us / 1000) % 1000))
@@ -84,7 +87,11 @@ else
     alias fgrep='fgrep --colour=auto'
 fi
 
-#
+#########
+# Alias #
+#########
+
+# Default
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
@@ -110,41 +117,51 @@ alias clean="rm -Rf *~ .*~"
 alias mcd="mkdir -p $1 && cd $1"
 alias mkdir="mkdir -p"
 
+# Update with pacman
+alias update="sudo pacman -Syu"
+
 # emacs
 alias emacs="emacs -nw"
 
 # Find here
-fhere() {
+fhere()
+{
     find . -name "$@"
 }
 
 # Find in user space
-fuser() {
+fuser()
+{
     find ~/ -name "$@"
 }
 
 # Doesn't print Permission denied file
-fsafe() {
+fsafe()
+{
     find "$@" 2> >(grep -v "Permission")
 }
 
 # locate command
-locate() {
+locate()
+{
     find / -name "$1" 2> >(grep -v "Permission")
 }
 
 # translate fr to en
-transen() {
+transen()
+{
     trans -s fr -t en "$@"
 }
 
 # translate en to fr
-transfr() {
+transfr()
+{
     trans -s en -t fr "$@"
 }
 
 # search expression in all file here
-search() {
+search()
+{
     grep -re "$1" *
 }
 
@@ -167,28 +184,12 @@ learn()
 # UI
 alias tbmail="thunderbird 2> /dev/null &"
 alias discord="discord 2> /dev/null &"
-alias evince="evince 2> /dev/null "
+alias evince="evince 2> /dev/null &"
 alias scilab="~/Téléchargements/scilab-6.1.0/bin/scilab 2>/dev/null &"
 
 #
-xhost +local:root > /dev/null 2>&1
-
-complete -cf sudo
-
-# Bash won't get SIGWINCH if another process is in the foreground.
-# Enable checkwinsize so that bash will check the terminal size when
-# it regains control.  #65623
-# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
-shopt -s checkwinsize
-
-shopt -s expand_aliases
-
-# Enable history appending instead of overwriting.  #139609
-shopt -s histappend
-
-#
-# # ex - archive extractor
-# # usage: ex <file>
+## ex - archive extractor
+## usage: ex <file>
 ex ()
 {
     if [ -f $1 ] ; then
@@ -211,9 +212,31 @@ ex ()
     fi
 }
 
-# export
+##############
+# Important  #
+##############
 
-# # man and less color
+#
+xhost +local:root > /dev/null 2>&1
+
+complete -cf sudo
+
+# Bash won't get SIGWINCH if another process is in the foreground.
+# Enable checkwinsize so that bash will check the terminal size when
+# it regains control.  #65623
+# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
+shopt -s checkwinsize
+
+shopt -s expand_aliases
+
+# Enable history appending instead of overwriting.  #139609
+shopt -s histappend
+
+###################
+# Export variable #
+###################
+
+# man and less color
 export LESS_TERMCAP_md=$'\e[01;31m'
 export LESS_TERMCAP_me=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[01;32m'
@@ -221,24 +244,24 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[47;30m'
 export LESS_TERMCAP_se=$'\e[0m'
 
-# # other
+# editor
 export EDITOR="emacs -nw"
 
-# # PATH
+# Spack
 if ! echo $PATH | grep -q /opt/spack/bin ; then
     export PATH=$PATH:/opt/spack/bin
 fi
 
-# # ls color
-# # # archive
+# ls color
+## archive
 export LS_COLORS="$LS_COLORS:*.tar=1;31:*.gz=1;31:*.tgz=1;31"
-# # # image
+## image
 export LS_COLORS="$LS_COLORS:*.jpeg=1;35:*.jpg=1;35:*.gif=1;35:*.png=1;35:*.ppm=1;35"
 
-# # # MPICH
+# MPICH
 mpich_path=/usr/local/mpich-3.4.1/bin
 
-# Load MPICH
+## Load MPICH
 loadmpich()
 {
     # Case load
@@ -251,9 +274,9 @@ loadmpich()
     fi
 }
 
-# Unload MPICH
-# Use + on sed because we use path, therefore we have slash (/) on our expresion
-# and it not match
+## Unload MPICH
+## Use + on sed because we use path, therefore we have slash (/) on our expresion
+## and it not match
 unloadmpich()
 {
     # Case :path:
@@ -278,7 +301,7 @@ unloadmpich()
     fi
 }
 
-# # Verificarlo
+# Verificarlo
 export PYTHONPATH="/usr/local/lib/python3.8/site-packages"
 export VFC_BACKENDS="libinterflop_ieee.so"
 
@@ -296,5 +319,5 @@ unsetompicarlo()
     unset OMPI_F
 }
 
-## History
+# History
 export HISTTIMEFORMAT="%F %T "

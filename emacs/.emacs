@@ -61,6 +61,7 @@
 (setq show-paren-style 'mixed)
 
 ;; auto fill with back slash the end of line when it too long to display
+(setq c-ignore-auto-fill nil)
 (setq-default fill-column 80)
 (setq-default fill-column-indicator 80)
 (setq-default indent-tabs-mode nil)

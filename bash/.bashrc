@@ -30,7 +30,11 @@ function parse_git_branch()
 # Parse git status
 function parse_git_status()
 {
-    [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo -n "*"
+    if [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] ; then
+        echo -n "*"
+    elif [[ $(git status --porcelain 2> /dev/null | grep -e "^??") != "" ]] ; then
+        echo -n "+"
+    fi
 }
 
 # Get time of the last command

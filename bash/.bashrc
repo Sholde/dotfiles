@@ -188,7 +188,7 @@ learn()
 # UI
 alias tbmail="thunderbird 2> /dev/null &"
 alias discord="discord 2> /dev/null &"
-alias evince="evince 2> /dev/null &"
+alias evince="evince 2> /dev/null "
 alias scilab="~/Téléchargements/scilab-6.1.0/bin/scilab 2>/dev/null &"
 
 #

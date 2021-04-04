@@ -175,11 +175,8 @@ learn()
     LINE=$(echo "$RANDOM % 3000 + 1" | bc)
     WORD=$(cat ~/.english.txt | sed -n $LINE"p")
 
-    # Clear terminal
-    clear
-
     # Display in color the word
-    echo -e $RED$WORD$RESET
+    echo -e "\033[1;31m"$WORD"\033[00m"
 
     # Translate
     trans -s en -t fr "$WORD"

@@ -169,6 +169,7 @@ search()
     grep -re "$1" *
 }
 
+# learn english 3,000 most common word
 learn()
 {
     # Choose word
@@ -180,6 +181,12 @@ learn()
 
     # Translate
     trans -s en -t fr "$WORD"
+}
+
+# Debug mpi probram
+mpidebug()
+{
+    mpirun -np "$1" xfce4-terminal -e "cgdb ./$2"
 }
 
 # UI

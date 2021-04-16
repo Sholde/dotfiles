@@ -189,6 +189,35 @@ mpidebug()
     mpirun -np "$1" xfce4-terminal -e "cgdb ./$2"
 }
 
+# Copy line in file
+copy()
+{
+    # Check number of argument
+    if [ $# != 3 ] ; then
+        echo "Usage: copy first_line last_line file"
+        return 1
+    fi
+
+    # https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash
+    re='^[0-9]*$'
+    
+    # Check if $1 and $2 are number and $1 < $2
+    if ! [[ $1 =~ $re ]] || ! [[ $2 =~ $re ]] || ! [[ $1 < $2 ]] ; then
+        echo "Usage: copy first_line last_line file"
+        echo "Error: first_line and last_line must be number and first_line < last_line."
+        return 1
+    fi
+
+    # Check if $3 is a file
+    if [ ! -f $3 ] ; then
+        echo "Error: $3 is not a valid file."
+        return 1
+    fi
+
+    # Real command
+    sed -n $1,$2"p" $3 | xclip -sel clip
+}
+
 # UI
 alias tbmail="thunderbird 2> /dev/null &"
 alias discord="discord 2> /dev/null &"

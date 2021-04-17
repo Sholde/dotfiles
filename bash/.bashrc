@@ -192,30 +192,53 @@ mpidebug()
 # Copy line in file
 copy()
 {
-    # Check number of argument
-    if [ $# != 3 ] ; then
-        echo "Usage: copy first_line last_line file"
-        return 1
-    fi
-
     # https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash
     re='^[0-9]*$'
     
-    # Check if $1 and $2 are number and $1 < $2
-    if ! [[ $1 =~ $re ]] || ! [[ $2 =~ $re ]] || ! [[ $1 < $2 ]] ; then
-        echo "Usage: copy first_line last_line file"
-        echo "Error: first_line and last_line must be number and first_line < last_line."
-        return 1
-    fi
+    # Check number of argument
+    if  [ $# == 2 ] ; then
 
-    # Check if $3 is a file
-    if [ ! -f $3 ] ; then
-        echo "Error: $3 is not a valid file."
-        return 1
-    fi
+        # Check if $1 is a file
+        if [ ! -f $1 ] ; then
+            echo "Error: $1 is not a valid file."
+            return 1
+        fi
 
-    # Real command
-    sed -n $1,$2"p" $3 | xclip -sel clip
+        # Check if $2 is a number
+        if ! [[ $2 =~ $re ]] ; then
+            echo "Usage: copy [FILE] [LINE]"
+            echo "Error: LINE must be a number."
+            return 1
+        fi
+
+        # Real command
+        sed -n $2"p" $1 | xclip -sel clip
+
+    elif  [ $# == 3 ] ; then
+
+        # Check if $1 is a file
+        if [ ! -f $1 ] ; then
+            echo "Error: $1 is not a valid file."
+            return 1
+        fi
+
+        # Check if $2 and $3 are number and $2 < $3
+        if ! [[ $2 =~ $re ]] || ! [[ $3 =~ $re ]] || ! [[ $2 < $3 ]] ; then
+            echo "Usage: copy [FILE] [FIRST LINE] [LAST LINE]"
+            echo "Error: FIRST LINE and LAST LINE must be numbers and FIRST LINE < LAST LINE."
+            return 1
+        fi
+
+        # Real command
+        sed -n $2,$3"p" $1 | xclip -sel clip
+        
+    else
+
+        echo "Usage: copy [FILE] [FIRST LINE] [LAST LINE] (block of line)"
+        echo "       copy [FILE] [LINE]                   (single line)"
+        return 1
+        
+    fi
 }
 
 # UI

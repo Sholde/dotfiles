@@ -3,7 +3,6 @@
 #######################################
 
 # Default
-alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias more="less"                         # less is better
@@ -11,9 +10,11 @@ alias np='nano -w PKGBUILD'
 
 # work
 alias cdmaster="cd ~/dev/master"
+alias cdm1="cd ~/dev/master/M1"
+alias cdm2="cd ~/dev/master/M2"
 alias cdaur="cd ~/dev/aur"
 alias cdperso="cd ~/dev/perso"
-alias cdverificarlo="cd ~/dev/master/projet/verificarlo"
+alias cdvfc="cd ~/dev/master/projet/verificarlo"
 
 # list
 alias ll="ls -l"
@@ -24,8 +25,11 @@ alias lla="ls -la"
 alias cl="clear"
 alias clean="rm -Rf *~ .*~"
 
+# confirm before owerwriting
+alias cp="cp -i"
+alias mv="mv -i"
+
 # mkdir
-alias mcd="mkdir -p $1 && cd $1"
 alias mkdir="mkdir -p"
 
 # Update with pacman
@@ -40,7 +44,10 @@ alias fuser="find ~/ -name $@"
 alias fsafe="find $@ 2> >(grep -v Permission)"
 
 # locate command
-alias locate="find / -name $1 2> >(grep -v Permission)"
+locate()
+{
+    find / -name $1 2> >(grep -v Permission)
+}
 
 # translate fr to en
 alias transen="trans -s fr -t en $@"
@@ -49,7 +56,10 @@ alias transen="trans -s fr -t en $@"
 alias transfr="trans -s en -t fr $@"
 
 # search expression in all file here
-alias search="grep -re $1 *"
+search()
+{
+    grep -re $1 *
+}
 
 # learn english 3,000 most common word
 learn()
@@ -74,7 +84,7 @@ mpidebug()
 # Copy line in file
 copy()
 {
-    # https://stackoverflow.com/questions/806906/how-do-i-test-if-a-variable-is-a-number-in-bash
+    # Regular expression for integer
     re='^[0-9]*$'
     
     # Check number of argument

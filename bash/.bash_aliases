@@ -65,8 +65,11 @@ learn()
     trans -s en -t fr "$WORD"
 }
 
-# Debug mpi probram
-alias mpidebug="mpirun -np \"$1\" xfce4-terminal -e \"cgdb ./$2\""
+# Debug mpi program
+mpidebug()
+{
+    mpirun -np $1 xfce4-terminal -e "gdb $2"
+}
 
 # Copy line in file
 copy()

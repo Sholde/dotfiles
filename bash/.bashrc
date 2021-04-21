@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # Display new terminal message
-figlet sholde
+cat ~/.sholde
 
 # Bash completion
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
@@ -91,9 +91,9 @@ else
     alias fgrep='fgrep --colour=auto'
 fi
 
-#########
-# Alias #
-#########
+#######################################
+#                Alias                #
+#######################################
 
 # Default
 alias cp="cp -i"                          # confirm before overwriting something
@@ -127,47 +127,22 @@ alias update="sudo pacman -Syu"
 # emacs
 alias emacs="emacs -nw"
 
-# Find here
-fhere()
-{
-    find . -name "$@"
-}
-
-# Find in user space
-fuser()
-{
-    find ~/ -name "$@"
-}
-
-# Doesn't print Permission denied file
-fsafe()
-{
-    find "$@" 2> >(grep -v "Permission")
-}
+# Find alias
+alias fhere="find . -name $@"
+alias fuser="find ~/ -name $@"
+alias fsafe="find $@ 2> >(grep -v Permission)"
 
 # locate command
-locate()
-{
-    find / -name "$1" 2> >(grep -v "Permission")
-}
+alias locate="find / -name $1 2> >(grep -v Permission)"
 
 # translate fr to en
-transen()
-{
-    trans -s fr -t en "$@"
-}
-
+alias transen="trans -s fr -t en $@"
+    
 # translate en to fr
-transfr()
-{
-    trans -s en -t fr "$@"
-}
+alias transfr="trans -s en -t fr $@"
 
 # search expression in all file here
-search()
-{
-    grep -re "$1" *
-}
+alias search="grep -re $1 *"
 
 # learn english 3,000 most common word
 learn()
@@ -184,10 +159,7 @@ learn()
 }
 
 # Debug mpi probram
-mpidebug()
-{
-    mpirun -np "$1" xfce4-terminal -e "cgdb ./$2"
-}
+alias mpidebug="mpirun -np \"$1\" xfce4-terminal -e \"cgdb ./$2\""
 
 # Copy line in file
 copy()
@@ -272,9 +244,9 @@ ex ()
     fi
 }
 
-##############
-# Important  #
-##############
+#######################################
+#             Important               #
+#######################################
 
 #
 xhost +local:root > /dev/null 2>&1
@@ -292,9 +264,9 @@ shopt -s expand_aliases
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
-###################
-# Export variable #
-###################
+#######################################
+#          Export variable            #
+#######################################
 
 # man and less color
 export LESS_TERMCAP_md=$'\e[01;31m'
@@ -314,7 +286,7 @@ fi
 
 # ls color
 ## archive
-export LS_COLORS="$LS_COLORS:*.tar=1;31:*.gz=1;31:*.tgz=1;31"
+export LS_COLORS="$LS_COLORS:*.tar=1;31:*.gz=1;31:*.tgz=1;31:*.zip=1;31"
 ## image
 export LS_COLORS="$LS_COLORS:*.jpeg=1;35:*.jpg=1;35:*.gif=1;35:*.png=1;35:*.ppm=1;35"
 
@@ -369,14 +341,14 @@ setompicarlo()
 {
     export OMPI_CC="verificarlo-c"
     export OMPI_CXX="verificarlo-c++"
-    export OMPI_F="verificarlo-f"
+    export OMPI_FC="verificarlo-f"
 }
 
 unsetompicarlo()
 {
     unset OMPI_CC
     unset OMPI_CXX
-    unset OMPI_F
+    unset OMPI_FC
 }
 
 # History

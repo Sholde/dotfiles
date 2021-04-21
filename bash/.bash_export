@@ -1,0 +1,89 @@
+#######################################
+#          Export variable            #
+#######################################
+
+# man and less color
+export LESS_TERMCAP_md=$'\e[01;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[01;32m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[47;30m'
+export LESS_TERMCAP_se=$'\e[0m'
+
+# editor
+export EDITOR="emacs -nw"
+
+# Spack
+if ! echo $PATH | grep -q /opt/spack/bin ; then
+    export PATH=$PATH:/opt/spack/bin
+fi
+
+# ls color
+## archive
+export LS_COLORS="$LS_COLORS:*.tar=1;31:*.gz=1;31:*.tgz=1;31:*.zip=1;31"
+## image
+export LS_COLORS="$LS_COLORS:*.jpeg=1;35:*.jpg=1;35:*.gif=1;35:*.png=1;35:*.ppm=1;35"
+
+# MPICH
+mpich_path=/usr/local/mpich-3.4.1/bin
+
+## Load MPICH
+loadmpich()
+{
+    # Case load
+    if echo $PATH | grep -q $mpich_path ; then
+        echo "MPICH is already load!"
+    # Case is not load
+    else
+        export PATH=$mpich_path:$PATH
+        echo "MPICH load!"
+    fi
+}
+
+## Unload MPICH
+## Use + on sed because we use path, therefore we have slash (/) on our expresion
+## and it not match
+unloadmpich()
+{
+    # Case :path:
+    if echo $PATH | grep -q ":"$mpich_path":" ; then
+        export PATH=$(echo $PATH | sed -e "s+:$mpich_path:+:+g")
+        echo "MPICH unload!"
+    # Case :path
+    elif echo $PATH | grep -q ":"$mpich_path ; then
+        export PATH=$(echo $PATH | sed -e "s+:$mpich_path++g")
+        echo "MPICH unload!"
+    # Case path:
+    elif echo $PATH | grep -q $mpich_path":" ; then
+        export PATH=$(echo $PATH | sed -e "s+$mpich_path:++g")
+        echo "MPICH unload!"
+    # Case path
+    elif echo $PATH | grep -q $mpich_path ; then
+        export PATH=$(echo $PATH | sed -e "s+$mpich_path++g")
+        echo "MPICH unload!"
+    # Case is not load
+    else
+        echo "MPICH is NOT load!"
+    fi
+}
+
+# Verificarlo
+export PYTHONPATH="/usr/local/lib/python3.8/site-packages"
+export VFC_BACKENDS="libinterflop_ieee.so"
+
+setompicarlo()
+{
+    export OMPI_CC="verificarlo-c"
+    export OMPI_CXX="verificarlo-c++"
+    export OMPI_FC="verificarlo-f"
+}
+
+unsetompicarlo()
+{
+    unset OMPI_CC
+    unset OMPI_CXX
+    unset OMPI_FC
+}
+
+# History
+export HISTTIMEFORMAT="%F %T "

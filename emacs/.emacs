@@ -87,7 +87,9 @@
 (package-initialize)
 
 ;; list the packages you want
-(setq package-list '(cmake-mode auto-complete badwolf-theme))
+(setq package-list '(cmake-mode
+                     auto-complete
+                     badwolf-theme))
 
 ;; fetch the list of packages available
 (unless package-archive-contents
@@ -127,3 +129,47 @@
 
 ;; auto insert pair
 (electric-pair-mode 1)
+
+;; markdown
+(require 'markdown-mode)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+;; org mode
+(add-to-list 'auto-mode-alist '("\\.\\(org\\|txt\\)$" . org-mode))
+
+(require 'htmlize)
+(setq org-html-htmlize-output-type 'inline-css)
+(setq org-html-validation-link nil)
+(setq org-export-html-extension "html")
+(setq org-export-with-sub-superscripts nil)
+
+;; export latex
+(require 'ox-latex)
+(unless (boundp 'org-latex-classes)
+  (setq org-export-classes nil))
+(add-to-list 'org-latex-classes
+      '("article"
+        "\\documentclass[12pt, letterpaper]{article}
+         \\usepackage[document]{ragged2e}"
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+;; enable highliting src in org mode
+(setq-default org-src-fontify-natively t)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (C .t)
+   (fortran .t)
+   (shell . t)
+   (python . t)
+   (R . t)
+   (emacs-lisp . t)
+   (lisp .t)
+   (haskell . t)
+   (perl . t)
+   (js . t)
+   ))

@@ -20,6 +20,8 @@ alias cdvfc="cd ~/dev/master/projet/verificarlo"
 alias ll="ls -l"
 alias la="ls -a"
 alias lla="ls -la"
+alias lsc="ls --format=single-column"
+alias lsca="ls --format=single-column -a"
 
 # clean
 alias cl="clear"
@@ -58,7 +60,7 @@ alias transfr="trans -s en -t fr $@"
 # search expression in all file here
 search()
 {
-    grep -re $1 *
+    grep -re "$1" *
 }
 
 # learn english 3,000 most common word

@@ -14,7 +14,7 @@ alias cdm1="cd ~/dev/master/M1"
 alias cdm2="cd ~/dev/master/M2"
 alias cdaur="cd ~/dev/aur"
 alias cdperso="cd ~/dev/perso"
-alias cdvfc="cd ~/dev/master/projet/verificarlo"
+alias cdvfc="cd ~/dev/master/M1/projet/verificarlo"
 
 # list
 alias ll="ls -l"
@@ -41,27 +41,21 @@ alias update="sudo pacman -Syu"
 alias emacs="emacs -nw"
 
 # Find alias
-alias fhere="find . -name $@"
-alias fuser="find ~/ -name $@"
-alias fsafe="find $@ 2> >(grep -v Permission)"
+fhere() { find . -name ${@} ; }
+fuser() { find ~/ -name ${@} ; }
+fsafe() { find ${@} 2> >(grep -v Permission) ; }
 
 # locate command
-locate()
-{
-    find / -name $1 2> >(grep -v Permission)
-}
+locate() { find / -name ${1} 2> >(grep -v Permission) ; }
 
 # translate fr to en
-alias transen="trans -s fr -t en $@"
+tren() { trans -s fr -t en "${@}" ; }
     
 # translate en to fr
-alias transfr="trans -s en -t fr $@"
+trfr() { trans -s en -t fr "${@}" ; }
 
 # search expression in all file here
-search()
-{
-    grep -re "$1" *
-}
+search() { grep -re "${1}" * ; }
 
 # learn english 3,000 most common word
 learn()
@@ -78,10 +72,7 @@ learn()
 }
 
 # Debug mpi program
-mpidebug()
-{
-    mpirun -np $1 xfce4-terminal -e "gdb $2"
-}
+mpidebug() { mpirun -np $1 xfce4-terminal -e "gdb $2" ; }
 
 # Copy line in file
 copy()

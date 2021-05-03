@@ -2,6 +2,9 @@
 #          Export variable            #
 #######################################
 
+# export en language
+export LANG=en_US.utf8
+
 # man and less color
 export LESS_TERMCAP_md=$'\e[01;31m'
 export LESS_TERMCAP_me=$'\e[0m'

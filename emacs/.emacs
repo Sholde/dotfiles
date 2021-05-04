@@ -76,6 +76,15 @@
 (add-to-list 'default-frame-alist
              '(font . "DejaVu Sans Mono-11"))
 
+;; Make startup faster by reducing the frequency of garbage
+;; collection. The default is 800 kilobytes. Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; The rest of the init file.
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
+
 ;; enable melpa repo
 (require 'package)
 (add-to-list 'package-archives
@@ -86,38 +95,37 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
-;; list the packages you want
-(setq package-list '(cmake-mode
-                     auto-complete
-                     badwolf-theme))
-
-;; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; install the missing packages
-(dolist (package package-list)
-  (unless (package-installed-p package)
-        (package-install package)))
+;;
+(require 'use-package)
 
 ;; cmake
-(require 'cmake-mode)
+(use-package cmake-mode
+  :defer t
+  :mode ("CMakeLists\.txt\'" "\.cmake(.in)?\'"))
 
 ;; auto-complete
-(require 'auto-complete)
-(ac-config-default)
+(use-package auto-complete
+  :defer t
+  :ensure t
+  :init (ac-config-default))
 
 ;; latex completion
 (load "~/.emacs.d/auto-complete-latex.el")
-(require 'auto-complete-latex)
+(use-package auto-complete-latex
+  :defer 1
+  :mode ("\.tex\'"))
 
 ;; mpi completion
 (load "~/.emacs.d/own-mode/auto-complete-mpi.el")
-(require 'auto-complete-mpi)
+(use-package auto-complete-mpi
+  :defer 1
+  :mode ("\.c\'" "\.h\'" "\.cc\'" "\.cpp\'" "\.c++\'" "\.hh\'"))
 
 ;; pthread completion
 (load "~/.emacs.d/own-mode/auto-complete-pthread.el")
-(require 'auto-complete-pthread)
+(use-package auto-complete-pthread
+  :defer 1
+  :mode ("\.c\'" "\.h\'" "\.cc\'" "\.cpp\'" "\.c++\'" "\.hh\'"))
 
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
@@ -125,51 +133,66 @@
 
 ;; theme
 ;;(load "~/.emacs.d/aanila-theme.el")
-(load-theme 'badwolf t)
+(use-package badwolf-theme
+  :defer t
+  :ensure t
+  :init (load-theme 'badwolf t))
 
 ;; auto insert pair
-(electric-pair-mode 1)
+(use-package electric-pair-mode
+  :defer t
+  :init (electric-pair-mode 1))
 
 ;; markdown
-(require 'markdown-mode)
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(use-package markdown-mode
+  :defer 1
+  :mode ("\.md\'"))
 
 ;; org mode
-(add-to-list 'auto-mode-alist '("\\.\\(org\\|txt\\)$" . org-mode))
+(use-package org-mode
+  :defer 1
+  :mode ("\.org\'"))
 
-(require 'htmlize)
-(setq org-html-htmlize-output-type 'inline-css)
-(setq org-html-validation-link nil)
-(setq org-export-html-extension "html")
-(setq org-export-with-sub-superscripts nil)
+;; export html
+(use-package htmlize
+  :defer 2
+  :mode ("\.org\'")
+  :init (progn
+          (setq org-html-htmlize-output-type 'inline-css)
+          (setq org-html-validation-link nil)
+          (setq org-export-html-extension "html")
+          (setq org-export-with-sub-superscripts nil)))
 
 ;; export latex
-(require 'ox-latex)
-(unless (boundp 'org-latex-classes)
-  (setq org-export-classes nil))
-(add-to-list 'org-latex-classes
-      '("article"
-        "\\documentclass[12pt, letterpaper]{article}
+(use-package ox-latex
+  :defer t
+  :mode ("\.org\'")
+  :config
+  (unless (boundp 'org-latex-classes)
+    (setq org-export-classes nil))
+  (add-to-list 'org-latex-classes
+               '("article"
+                 "\\documentclass[12pt, letterpaper]{article}
          \\usepackage[document]{ragged2e}"
-         ("\\section{%s}" . "\\section*{%s}")
-         ("\\subsection{%s}" . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-         ("\\paragraph{%s}" . "\\paragraph*{%s}")
-         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-;; enable highliting src in org mode
-(setq-default org-src-fontify-natively t)
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (C .t)
-   (fortran .t)
-   (shell . t)
-   (python . t)
-   (R . t)
-   (emacs-lisp . t)
-   (lisp .t)
-   (haskell . t)
-   (perl . t)
-   (js . t)
-   ))
+  ;; enable highliting src in org mode
+  (setq-default org-src-fontify-natively t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (C .t)
+     (fortran .t)
+     (shell . t)
+     (python . t)
+     (R . t)
+     (emacs-lisp . t)
+     (lisp .t)
+     (haskell . t)
+     (perl . t)
+     (js . t)
+     )))

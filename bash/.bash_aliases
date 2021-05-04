@@ -34,7 +34,8 @@ alias mv="mv -i"
 # mkdir
 alias mkdir="mkdir -p"
 
-# Update with pacman
+# pacman
+alias psync="sudo pacman -Sy"
 alias update="sudo pacman -Syu"
 
 # emacs

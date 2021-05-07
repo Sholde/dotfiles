@@ -74,7 +74,7 @@
 
 ;; Font
 (add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono-11"))
+             '(font . "DejaVu Sans Mono-12"))
 
 ;; Make startup faster by reducing the frequency of garbage
 ;; collection. The default is 800 kilobytes. Measured in bytes.
@@ -85,18 +85,20 @@
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
 
-;; enable melpa repo
-(require 'package)
-(add-to-list 'package-archives
-             '("gnu" . "http://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
-(package-initialize)
+;; enable gnu, melpa and melpa-stable repo
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/"))
+      package-quickstart t)
 
-;;
-(require 'use-package)
+
+;; ensure that use-package is installed
+(unless (and (fboundp 'package-installed-p)
+             (package-installed-p 'use-package))
+  (package-initialize)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 ;; cmake
 (use-package cmake-mode
@@ -160,6 +162,7 @@
   :init (progn
           (setq org-html-htmlize-output-type 'inline-css)
           (setq org-html-validation-link nil)
+          (setq org-export-html-postamble nil)
           (setq org-export-html-extension "html")
           (setq org-export-with-sub-superscripts nil)))
 
@@ -196,3 +199,13 @@
      (perl . t)
      (js . t)
      )))
+
+;;(use-package powerline
+;;  :defer t
+;;  :ensure t
+;;  :init (powerline-default-theme))
+
+;; enable shell-script-mode
+(add-to-list 'auto-mode-alist '("\\.bash.*\\'" . shell-script-mode))
+(add-to-list 'auto-mode-alist '("\\.config\\'" . shell-script-mode))
+

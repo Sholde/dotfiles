@@ -11,10 +11,73 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; disable useless bar
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
+;; PROFILING
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
+;; SETTING VARIABLE
+
+;; disable useless thing
+(setq inhibit-startup-message t)
+
+(scroll-bar-mode -1)        ; Disable visible scrollbar
+(tool-bar-mode -1)          ; Disable the toolbar
+(tooltip-mode -1)           ; Disable tooltips
+(set-fringe-mode 10)        ; Give some breathing room
+
+(menu-bar-mode -1)          ; Disable the menu bar
+
+;; Set up the visible bell
+;; show error (and not make sound)
+(setq visible-bell t)
+
+;; enable syntax color
+(global-font-lock-mode t)
+
+;; Enable column number
+(column-number-mode t)
+
+;; Remove column number because it is redondant
+;;(when (version<= "26.0.50" emacs-version)
+;;  (global-display-line-numbers-mode))
+
+;; parenthesis highlight
+(show-paren-mode 1)
+(setq show-paren-style 'mixed)
+
+;; auto fill with back slash the end of line when it too long to display
+(setq c-ignore-auto-fill nil)                 ;; enable autofill
+(setq-default fill-column 80)                 ;; fix fill column (don't works)
+(setq-default fill-column-indicator 80)       ;; fix indicator
+(setq-default indent-tabs-mode nil)           ;; space > tabs
+(add-hook 'text-mode-hook 'turn-on-auto-fill) ;; autofill
+
+;; if indent-tabs-mode is off, untabify before saving
+(add-hook 'write-file-hooks
+          (lambda () (if (not indent-tabs-mode)
+                         (untabify (point-min) (point-max)))
+            nil ))
+
+;; Font
+(add-to-list 'default-frame-alist
+             '(font . "DejaVu Sans Mono-12"))
+
+;; Make startup faster by reducing the frequency of garbage
+;; collection. The default is 800 kilobytes. Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; The rest of the init file.
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
+
+;; COMMAND
 
 ;; begin new line above
 (defun my/begin-line-above (times)
@@ -43,47 +106,7 @@
 (global-set-key (kbd "M-p")
                 (lambda () (interactive) (previous-line 5)))
 
-;; show error (and not make sound)
-(setq visible-bell t)
-
-;; enable syntax color
-(global-font-lock-mode t)
-
-;; Enable column number
-(column-number-mode t)
-
-;; Remove column number because it is redondant
-;;(when (version<= "26.0.50" emacs-version)
-;;  (global-display-line-numbers-mode))
-
-;; parenthesis highlight
-(show-paren-mode 1)
-(setq show-paren-style 'mixed)
-
-;; auto fill with back slash the end of line when it too long to display
-(setq c-ignore-auto-fill nil)
-(setq-default fill-column 80)
-(setq-default fill-column-indicator 80)
-(setq-default indent-tabs-mode nil)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-;; if indent-tabs-mode is off, untabify before saving
-(add-hook 'write-file-hooks
-          (lambda () (if (not indent-tabs-mode)
-                         (untabify (point-min) (point-max)))
-            nil ))
-
-;; Font
-(add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono-12"))
-
-;; Make startup faster by reducing the frequency of garbage
-;; collection. The default is 800 kilobytes. Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
-
-;; The rest of the init file.
-
-;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
+;; PACKAGE
 
 ;; enable gnu, melpa and melpa-stable repo
 (setq package-archives

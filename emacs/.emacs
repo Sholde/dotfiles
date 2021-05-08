@@ -198,7 +198,7 @@
     (setq org-export-classes nil))
   (add-to-list 'org-latex-classes
                '("article"
-                 "\\documentclass[12pt, letterpaper]{article}
+                 "\\documentclass[11pt, letterpaper]{article}
          \\usepackage[document]{ragged2e}"
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")

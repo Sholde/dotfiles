@@ -24,7 +24,6 @@ alias lsc="ls --format=single-column"
 alias lsca="ls --format=single-column -a"
 
 # clean
-alias cl="clear"
 alias clean="rm -Rf *~ .*~"
 
 # confirm before owerwriting
@@ -57,6 +56,15 @@ trfr() { trans -s en -t fr "${@}" ; }
 
 # search expression in all file here
 search() { grep -re "${1}" * ; }
+
+# count word in file
+cw() { cat ${1} | wc -w ; }
+
+# count line in file
+cl() { cat ${1} | wc -l ; }
+
+# count all in file
+ct() { cat ${1} | wc ; }
 
 # learn english 3,000 most common word
 learn()

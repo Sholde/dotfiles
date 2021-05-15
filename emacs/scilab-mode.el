@@ -21,33 +21,47 @@
         ;; Constant / Number
         ("[0-9]+\\(\\.[0-9]+\\)?\\(\\:[0-9]+\\(\\.[0-9]+\\)?\\)*"                 . font-lock-constant-face)))
 
+;; indentation
+(setq default-tab-width 4)
+
+(defun scilab-indent-line ()
+  "Indent current line for scilab-mode."
+  (interactive)
+  (beginning-of-line)
+  (if (bobp)  ; Check for rule 1
+      (indent-line-to 0)
+    (let ((not-indented t) cur-indent)
+      (if (looking-at "^[ \t]*\\(endfunction\\|end\\)") ; Check for rule 2
+          (progn
+            (save-excursion
+              (forward-line -1)
+              (setq cur-indent (- (current-indentation) default-tab-width)))
+            (if (< cur-indent 0)
+                (setq cur-indent 0)))
+                (save-excursion 
+                  (while not-indented
+                    (forward-line -1)
+                    (if (looking-at "^[ \t]*\\(endfunction\\|end\\)") ; Check for rule 3
+                        (progn
+                          (setq cur-indent (current-indentation))
+                          (setq not-indented nil))
+                                        ; Check for rule 4
+                      (if (looking-at "^[ \t]*\\(function\\|if\\|for\\|while\\)")
+                          (progn
+                            (setq cur-indent (+ (current-indentation) default-tab-width))
+                            (setq not-indented nil))
+                        (if (bobp) ; Check for rule 5
+                            (setq not-indented nil)))))))
+      (if cur-indent
+          (indent-line-to cur-indent)
+        (indent-line-to 0))))) ; If we didn't see an indentation hint, then allow no indentation
+    
+
+    
 ;; Defining scilab-mode
 (define-derived-mode scilab-mode fundamental-mode "scilab"
   "major mode for editing scilab language code."
-  (setq font-lock-defaults '(scilab-highlights)))
-;;  (make-local-variable 'scilab-indent-offset))
-;;  (set (make-local-variable 'indent-line-function) 'scilab-indent-line))
+  (setq font-lock-defaults '(scilab-highlights))
+  (make-local-variable 'scilab-indent-offset)
+  (set (make-local-variable 'indent-line-function) 'scilab-indent-line))
 
-;; tab width
-(defvar scilab-indent-offset 4
-  "*Indentation offset for `scilab-mode'.")
-
-;; indentaion rules
-(defun scilab-indent-line ()
-  "Indent current line for `scilab-mode'."
-  (interactive)
-  (let ((indent-col 0))
-    (save-excursion
-      (beginning-of-line)
-      (condition-case nil
-          (while t
-            (backward-up-list 1)
-            (when (looking-at "\\<function\\>")
-              (setq indent-col (+ indent-col scilab-indent-offset))))
-        (error nil)))
-    (save-excursion
-      (back-to-indentation)
-      (when (and (looking-at "\\<endfunction\\>") (>= indent-col scilab-indent-offset))
-        (setq indent-col (- indent-col scilab-indent-offset))))
-    (indent-line-to indent-col)))
-    

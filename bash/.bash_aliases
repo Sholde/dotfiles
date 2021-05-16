@@ -64,7 +64,15 @@ cw() { cat ${1} | wc -w ; }
 cl() { cat ${1} | wc -l ; }
 
 # count all in file
-ct() { cat ${1} | wc ; }
+ca() { cat ${1} | wc ; }
+
+# info
+alias cpuinfo="cat /proc/cpuinfo"
+alias meminfo="cat /proc/meminfo"
+alias zoneinfo="cat /proc/zoneinfo"
+
+# poweroff
+alias off="shutdown now"
 
 # learn english 3,000 most common word
 learn()

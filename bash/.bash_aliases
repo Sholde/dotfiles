@@ -79,7 +79,7 @@ timer()
 {
     if [ ${1} -ge 1 ] ; then
         for i in `seq ${1} -1 1` ; do
-            echo -ne "\033[0K\r${i} times" ;
+            echo -ne "\033[0K\r${i} seconds left" ;
             sleep 1 ;
         done
         echo -ne "\033[0K\rWaiting ${1} seconds\n" ;

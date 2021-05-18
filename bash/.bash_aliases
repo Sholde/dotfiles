@@ -74,6 +74,18 @@ alias zoneinfo="cat /proc/zoneinfo"
 # poweroff
 alias off="shutdown now"
 
+# timer
+timer()
+{
+    if [ ${1} -ge 1 ] ; then
+        for i in `seq ${1} -1 1` ; do
+            echo -ne "\033[0K\r${i} times" ;
+            sleep 1 ;
+        done
+        echo -ne "\033[0K\rWaiting ${1} seconds\n" ;
+    fi
+}
+
 # learn english 3,000 most common word
 learn()
 {

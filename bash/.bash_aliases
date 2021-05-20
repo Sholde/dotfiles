@@ -74,6 +74,9 @@ alias zoneinfo="cat /proc/zoneinfo"
 # poweroff
 alias off="shutdown now"
 
+# octal permission
+ols() { stat -c "%A %a %n" ${1} ; }
+
 # timer
 timer()
 {

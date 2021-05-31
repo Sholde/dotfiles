@@ -2,24 +2,9 @@
 # ~/.bashrc
 #
 
-# Check if running interactively
-[[ $- != *i* ]] && return
-
-# Display new terminal message
-cat ~/.sholde
-
-# Bash completion
-[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
-
-# Change the window title of X terminals
-case ${TERM} in
-    xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-        PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
-        ;;
-    screen*)
-        PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
-        ;;
-esac
+#######################################
+#             Functions               #
+#######################################
 
 # Parse current git branch
 function parse_git_branch()
@@ -68,6 +53,30 @@ function timer_stop()
     unset timer_start
 }
 
+#######################################
+#               Script                #
+#######################################
+
+# Check if running interactively
+[[ $- != *i* ]] && return
+
+# Display new terminal message
+cat ~/.sholde
+
+# Bash completion
+[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+
+# Change the window title of X terminals
+case ${TERM} in
+    xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
+        PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+        ;;
+    screen*)
+        PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+        ;;
+esac
+
+# Time of the last command
 trap 'timer_start' DEBUG
 PROMPT_COMMAND=timer_stop
 
@@ -76,12 +85,15 @@ if [[ ${EUID} == 0 ]] ; then
     PS1='[\u@\h \W]$(parse_git_branch) \$ '
 else
     # PS1
+    PS1='\[\033[1;34m\][$?] '                                       # error
+    PS1+='\[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'   # usual prompt
+    PS1+='\[\033[1;31m\]$(parse_git_branch)$(parse_git_status) '    # git
+    PS1+='\[\033[1;33m\](${timer_show}) '                           # time
+
     if [ $(id -u) -eq 0 ] ; then
-        PS1='\[\033[1;34m\][$?] \[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'
-        PS1+='\[\033[1;31m\]$(parse_git_branch)$(parse_git_status) \[\033[1;33m\](${timer_show}) \[\033[1;31m\]#\[\033[00m\] '
+        PS1+='\[\033[1;31m\]#\[\033[00m\] '                         # root
     else
-        PS1='\[\033[1;34m\][$?] \[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'
-        PS1+='\[\033[1;31m\]$(parse_git_branch)$(parse_git_status) \[\033[1;33m\](${timer_show}) \[\033[01;32m\]\$\[\033[00m\] '
+        PS1+='\[\033[01;32m\]\$\[\033[00m\] '                       # user
     fi
 
     # Color alias

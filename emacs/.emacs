@@ -34,10 +34,9 @@
 (menu-bar-mode -1)          ; Disable the menu bar
 
 ;; Set up the visible bell
-;; show error (and not make sound)
 (setq visible-bell t)
 
-;; enable syntax color
+;; Enable syntax color
 (global-font-lock-mode t)
 
 ;; Enable column number
@@ -47,18 +46,20 @@
 ;;(when (version<= "26.0.50" emacs-version)
 ;;  (global-display-line-numbers-mode))
 
-;; parenthesis highlight
+;; Parenthesis highlight
 (show-paren-mode 1)
 (setq show-paren-style 'mixed)
 
-;; auto fill with back slash the end of line when it too long to display
+;; Auto fill when the line is too long to display
 (setq c-ignore-auto-fill nil)                 ;; enable autofill
-(setq-default fill-column 80)                 ;; fix fill column (don't works)
-(setq-default fill-column-indicator 80)       ;; fix indicator
+(setq-default fill-column 72)                 ;; fix fill column (don't works)
+(setq-default fill-column-indicator 72)       ;; fix indicator
 (setq-default indent-tabs-mode nil)           ;; space > tabs
-(add-hook 'text-mode-hook 'turn-on-auto-fill) ;; autofill
+(setq-default word-wrap t)                    ;; enable word-wrap
+(add-hook 'text-mode-hook 'turn-on-auto-fill) ;; auto-fill
+(add-hook 'prog-mode-hook 'turn-on-auto-fill) ;; auto-fill
 
-;; if indent-tabs-mode is off, untabify before saving
+;; If indent-tabs-mode is off, untabify before saving
 (add-hook 'write-file-hooks
           (lambda () (if (not indent-tabs-mode)
                          (untabify (point-min) (point-max)))
@@ -79,7 +80,7 @@
 
 ;; COMMAND
 
-;; begin new line above
+;; Begin new line above
 (defun my/begin-line-above (times)
   (interactive "p") ; Calleb from M-x
   (move-beginning-of-line 1)
@@ -89,7 +90,7 @@
 (global-set-key (kbd "M-o")
                 'my/begin-line-above)
 
-;; begin new line beside
+;; Begin new line beside
 (defun my/begin-line-beside (times)
   (interactive "p") ; Calleb from M-x
   (move-end-of-line 1)
@@ -98,7 +99,7 @@
 (global-set-key (kbd "C-o")
                 'my/begin-line-beside)
 
-;; some control
+;; Some controls
 (global-set-key [(control z)] 'undo)
 (global-set-key [(meta g)] 'goto-line)
 (global-set-key (kbd "M-n")
@@ -108,7 +109,7 @@
 
 ;; PACKAGE
 
-;; enable gnu, melpa and melpa-stable repo
+;; Enable gnu, melpa and melpa-stable repo
 (setq package-archives
       '(("gnu" . "http://elpa.gnu.org/packages/")
         ("melpa" . "http://melpa.org/packages/")
@@ -116,7 +117,7 @@
       package-quickstart t)
 
 
-;; ensure that use-package is installed
+;; Ensure that use-package is installed
 (unless (and (fboundp 'package-installed-p)
              (package-installed-p 'use-package))
   (package-initialize)
@@ -156,7 +157,7 @@
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 
-;; theme
+;; Theme
 ;;(load "~/.emacs.d/aanila-theme.el")
 (use-package badwolf-theme
   :defer t
@@ -178,7 +179,7 @@
   :defer 1
   :mode ("\.org\'"))
 
-;; export html
+;; Export html
 (use-package htmlize
   :defer 2
   :mode ("\.org\'")
@@ -189,7 +190,7 @@
           (setq org-export-html-extension "html")
           (setq org-export-with-sub-superscripts nil)))
 
-;; export latex
+;; Export latex
 (use-package ox-latex
   :defer t
   :mode ("\.org\'")
@@ -206,7 +207,7 @@
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-  ;; enable highliting src in org mode
+  ;; Enable highliting src in org mode
   (setq-default org-src-fontify-natively t)
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -223,12 +224,7 @@
      (js . t)
      )))
 
-;;(use-package powerline
-;;  :defer t
-;;  :ensure t
-;;  :init (powerline-default-theme))
-
-;; enable shell-script-mode
+;; Enable shell-script-mode
 (add-to-list 'auto-mode-alist '("\\.bash.*\\'" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.config\\'" . shell-script-mode))
 

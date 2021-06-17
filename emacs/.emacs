@@ -52,8 +52,8 @@
 
 ;; Auto fill when the line is too long to display
 (setq c-ignore-auto-fill nil)                 ;; enable autofill
-(setq-default fill-column 72)                 ;; fix fill column (don't works)
-(setq-default fill-column-indicator 72)       ;; fix indicator
+(setq-default fill-column 80)                 ;; fix fill column (don't works)
+(setq-default fill-column-indicator 80)       ;; fix indicator
 (setq-default indent-tabs-mode nil)           ;; space > tabs
 (setq-default word-wrap t)                    ;; enable word-wrap
 (add-hook 'text-mode-hook 'turn-on-auto-fill) ;; auto-fill

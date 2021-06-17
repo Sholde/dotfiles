@@ -116,7 +116,6 @@
         ("melpa-stable" . "https://stable.melpa.org/packages/"))
       package-quickstart t)
 
-
 ;; Ensure that use-package is installed
 (unless (and (fboundp 'package-installed-p)
              (package-installed-p 'use-package))
@@ -227,4 +226,3 @@
 ;; Enable shell-script-mode
 (add-to-list 'auto-mode-alist '("\\.bash.*\\'" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.config\\'" . shell-script-mode))
-

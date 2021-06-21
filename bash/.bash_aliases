@@ -165,9 +165,24 @@ alias evince="evince 2> /dev/null "
 alias scilab="~/Téléchargements/scilab-6.1.0/bin/scilab 2>/dev/null &"
 
 #
+## tarball - archive generator
+### usage: tarball <file> <directory>
+#### note: file is the name without suffix ".tar.gz"
+tarball()
+{
+    if [ -d $2 ] ; then
+        cp -R $2 $1
+        tar -czvf $1.tar.gz $1
+        rm -Rf $1
+    else
+        echo "'$2' in not a valid directory"
+    fi
+}
+
+#
 ## ex - archive extractor
 ## usage: ex <file>
-ex ()
+ex()
 {
     if [ -f $1 ] ; then
         case $1 in

@@ -16,8 +16,8 @@ order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery all"
 order += "cpu_usage"
-order += "disk /"
 order += "memory"
+order += "disk /"
 order += "volume master"
 order += "tztime local"
 
@@ -46,15 +46,15 @@ cpu_usage {
         max_threshold = 90
 }
 
-disk "/" {
-        format = "DISK: %used/%total"
-        low_threshold = 10
-}
-
 memory {
         format = "RAM: %used/%total"
         threshold_degraded = 50%
         threshold_critical = 10%
+}
+
+disk "/" {
+        format = "DISK: %used/%total"
+        low_threshold = 10
 }
 
 volume master {

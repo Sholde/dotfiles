@@ -103,25 +103,24 @@ else
     alias fgrep='fgrep --colour=auto'
 fi
 
+# history length
+HISTSIZE=1000
+HISTFILESIZE=2000
 
-#######################################
-#             Important               #
-#######################################
-
-#
+# Important
 xhost +local:root > /dev/null 2>&1
 
 complete -cf sudo
 
-# Bash won't get SIGWINCH if another process is in the foreground.
-# Enable checkwinsize so that bash will check the terminal size when
-# it regains control.  #65623
-# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
+#######################################
+#                SHOPT                #
+#######################################
+
+shopt -s autocd
+shopt -s cdspell
+shopt -s cmdhist
 shopt -s checkwinsize
-
 shopt -s expand_aliases
-
-# Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
 #######################################
@@ -139,4 +138,3 @@ fi
 if [ -f ~/.bash_export ] ; then
     source ~/.bash_export
 fi
-

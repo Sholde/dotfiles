@@ -158,6 +158,12 @@ copy()
     fi
 }
 
+# ip
+## Global ip
+alias gip="dig +short myip.opendns.com @resolver1.opendns.com"
+## Local ip
+alias lip="hostname -i | cut -d' ' -f1"
+
 # UI
 alias tbmail="thunderbird 2> /dev/null &"
 alias discord="discord 2> /dev/null &"

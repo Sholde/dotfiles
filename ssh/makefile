@@ -3,5 +3,5 @@
 all: install
 
 install:
-	mkdir -p ~/.ssh/config
+	mkdir -p ~/.ssh
 	cp -Rf config ~/.ssh/config

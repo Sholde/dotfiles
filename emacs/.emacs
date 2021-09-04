@@ -33,6 +33,9 @@
 
 (menu-bar-mode -1)          ; Disable the menu bar
 
+;; Set encoding
+(prefer-coding-system 'utf-8)
+
 ;; Set up the visible bell
 (setq visible-bell t)
 

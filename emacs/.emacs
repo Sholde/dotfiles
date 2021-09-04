@@ -68,6 +68,9 @@
                          (untabify (point-min) (point-max)))
             nil ))
 
+;; Delete trailing whitespace on save
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+
 ;; Font
 (add-to-list 'default-frame-alist
              '(font . "DejaVu Sans Mono-12"))

@@ -174,6 +174,11 @@
   :defer t
   :init (electric-pair-mode 1))
 
+;; vim empty lines mode
+(use-package vim-empty-lines-mode
+  :defer t
+  :init (global-vim-empty-lines-mode))
+
 ;; markdown
 (use-package markdown-mode
   :defer 1

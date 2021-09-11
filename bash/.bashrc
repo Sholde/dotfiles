@@ -116,7 +116,6 @@ complete -cf sudo
 #                SHOPT                #
 #######################################
 
-shopt -s autocd
 shopt -s cdspell
 shopt -s cmdhist
 shopt -s checkwinsize

@@ -9,12 +9,7 @@ alias more="less"                         # less is better
 alias np='nano -w PKGBUILD'
 
 # work
-alias cdmaster="cd ~/dev/master"
-alias cdm1="cd ~/dev/master/M1"
-alias cdm2="cd ~/dev/master/M2"
-alias cdaur="cd ~/dev/aur"
-alias cdperso="cd ~/dev/perso"
-alias cdvfc="cd ~/dev/master/M1/projet/verificarlo"
+alias cdwork="cd ~/dev"
 
 # list
 alias ll="ls -l"
@@ -50,7 +45,7 @@ locate() { find / -name ${1} 2> >(grep -v Permission) ; }
 
 # translate fr to en
 tren() { trans -s fr -t en "${@}" ; }
-    
+
 # translate en to fr
 trfr() { trans -s en -t fr "${@}" ; }
 
@@ -111,7 +106,7 @@ copy()
 {
     # Regular expression for integer
     re='^[0-9]*$'
-    
+
     # Check number of argument
     if  [ $# == 2 ] ; then
 
@@ -148,13 +143,13 @@ copy()
 
         # Real command
         sed -n $2,$3"p" $1 | xclip -sel clip
-        
+
     else
 
         echo "Usage: copy [FILE] [FIRST LINE] [LAST LINE] (block of line)"
         echo "       copy [FILE] [LINE]                   (single line)"
         return 1
-        
+
     fi
 }
 

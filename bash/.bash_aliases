@@ -155,7 +155,7 @@ copy()
 
 # ip
 ## Global ip
-alias gip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias gip="curl https://ifconfig.co"
 ## Local ip
 alias lip="hostname -i | cut -d' ' -f1"
 

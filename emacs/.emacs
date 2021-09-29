@@ -234,6 +234,11 @@
      (js . t)
      )))
 
+;; Jupyter Notebook in emacs
+(use-package ein
+  :defer 1
+  :mode ("\.ipynb\'"))
+
 ;; Enable shell-script-mode
 (add-to-list 'auto-mode-alist '("\\.bash.*\\'" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.config\\'" . shell-script-mode))

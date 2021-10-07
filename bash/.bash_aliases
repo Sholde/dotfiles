@@ -205,6 +205,12 @@ ex()
     fi
 }
 
+# Extract C functions from file
+ecfunc()
+{
+    cat ${1} | grep -P "^[a-zA-Z_]+[[:space:]]*[\*]?[a-zA-Z0-9_-]+\("
+}
+
 # Snippet
 cmain()
 {

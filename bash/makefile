@@ -8,6 +8,7 @@ install:
 	cp -rf .bashrc ~/.bashrc
 	cp -rf .english.txt ~/.english.txt
 	cp -rf .sholde ~/.sholde
+	cp -rf .makefile.template ~/.makefile.template
 
 clean:
 	rm -Rf *~ .*~

@@ -204,3 +204,69 @@ ex()
         echo "'$1' is not a valid file"
     fi
 }
+
+# Snippet
+cmain()
+{
+    cat > main.c <<EOF
+int main(int argc, char **argv)
+{
+  return 0;
+}
+EOF
+}
+
+mpimain()
+{
+    cat > main.c <<EOF
+#include <mpi.h>
+
+int main(int argc, char **argv)
+{
+  MPI_Init(&argc, &argv);
+
+  MPI_Finalize();
+  return 0;
+}
+EOF
+}
+
+cfile()
+{
+    # Code file
+    cat > $1.c <<EOF
+#include "${1}.h"
+EOF
+
+    # Header file
+    upper_header=$(echo $1 | tr [:lower:] [:upper:])
+    cat > $1.h <<EOF
+#ifndef _${upper_header}_H_
+#define _${upper_header}_H_
+
+#endif // _${upper_header}_H_
+EOF
+}
+
+ccfile()
+{
+    # Code file
+    cat > $1.cc <<EOF
+#include "${1}.hh"
+EOF
+
+    # Header file
+    upper_header=$(echo $1 | tr [:lower:] [:upper:])
+    cat > $1.hh <<EOF
+#ifndef _${upper_header}_HH_
+#define _${upper_header}_HH_
+
+#endif // _${upper_header}_HH_
+EOF
+}
+
+genmake()
+{
+    # Generate basic makefile
+    cat ~/.makefile.template > makefile
+}

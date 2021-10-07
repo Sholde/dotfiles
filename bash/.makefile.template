@@ -8,9 +8,9 @@ TARGET=main
 
 .PHONY: all clean
 
-all: main
+all: $(TARGET)
 
-main: main.o
+$(TARGET): main.o
 	$(CC) $(LFLAGS) $^ -o $@
 
 %.o: %.c

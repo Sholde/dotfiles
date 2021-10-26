@@ -96,6 +96,9 @@ else
         PS1+='\[\033[01;32m\]\$\[\033[00m\] '                       # user
     fi
 
+    # PS2
+    PS2='\[\033[01;32m\]continue ->\[\033[00m\] '
+
     # Color alias
     alias ls='ls --color=auto'
     alias grep='grep --colour=auto'

@@ -78,7 +78,7 @@ esac
 
 # Time of the last command
 trap 'timer_start' DEBUG
-PROMPT_COMMAND=timer_stop
+PROMPT_COMMAND+="; timer_stop"
 
 # Test if colorful terminal is used
 if [[ ${EUID} == 0 ]] ; then

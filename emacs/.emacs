@@ -242,3 +242,15 @@
 ;; Enable shell-script-mode
 (add-to-list 'auto-mode-alist '("\\.bash.*\\'" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.config\\'" . shell-script-mode))
+
+;; linum
+(use-package nlinum-relative
+  :defer 1
+  :config
+  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+  (setq nlinum-relative-redisplay-delay 0)      ;; delay
+  (setq nlinum-relative-current-symbol "")      ;; or "" for display current line number
+  (setq nlinum-relative-offset 0)               ;; 1 if you want 0, 2, 3...
+  (setq nlinum-format "%d\u2502")               ;; adding padding
+  (nlinum-relative-mode)
+  )

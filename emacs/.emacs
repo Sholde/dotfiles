@@ -245,7 +245,7 @@
 
 ;; linum
 (use-package nlinum-relative
-  :defer 1
+  :defer 0
   :config
   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
   (setq nlinum-relative-redisplay-delay 0)      ;; delay

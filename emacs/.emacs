@@ -168,6 +168,10 @@
   :defer t
   :ensure t
   :init (load-theme 'badwolf t))
+;;(add-to-list 'default-frame-alist '(background-color . "black"))
+;;(set-face-background 'default "black")
+;;(add-to-list 'default-frame-alist '(display-line-numbers . "black"))
+;;(setq-default customize-group '(display-line-numbers . "black"))
 
 ;; auto insert pair
 (use-package electric-pair-mode
@@ -252,6 +256,6 @@
   (setq-default nlinum-relative-redisplay-delay 0)      ;; delay
   (setq-default nlinum-relative-current-symbol "")      ;; or "" for display current line number
   (setq-default nlinum-relative-offset 0)               ;; 1 if you want 0, 2, 3...
-  (setq-default nlinum-format "%d\u2502")               ;; adding padding
+  (setq-default nlinum-format "%4d\u2502")              ;; adding padding
   (global-nlinum-relative-mode)
   )

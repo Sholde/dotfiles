@@ -276,3 +276,38 @@ genmake()
     # Generate basic makefile
     cat ~/.makefile.template > makefile
 }
+
+# fuqit
+fuqit()
+{
+    # Store
+    pwd_var=$(pwd)
+
+    # Test if we are in the HOME directory
+    if [ "${pwd_var}" == "${HOME}" ] ; then
+        echo "You are in the home directory."
+        echo "path: ${pwd_var}"
+        return 1
+    fi
+
+    # Test if we are not in the HOME directory
+    res=$(echo ${pwd_var} | grep -i "${HOME}")
+    if [ "${res}" == "" ] ; then
+        echo "You are NOT in the home directory."
+        echo "path: ${pwd_var}"
+        return 2
+    fi
+
+    # Remove file
+    echo "You are in a subdirectory of home directory."
+    echo "path: ${pwd_var}"
+
+    echo -n "remove:"
+    for f in $(ls ${pwd_var}) ; do
+        echo -n " ${f}"
+    done
+    echo ""
+    echo ""
+
+    rm -Rfi *
+}

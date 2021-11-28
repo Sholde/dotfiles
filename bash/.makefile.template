@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall -std=c99
-OFLAGS=-O2 -march=native -march=native
-DFLAGS=-g3
+CFLAGS=-Wall -Wextra
+OFLAGS=-O2 -march=native -mtune=native
+DFLAGS=-g
 LFLAGS=
 
 TARGET=main
@@ -11,12 +11,12 @@ TARGET=main
 all: $(TARGET)
 
 $(TARGET): main.o
-	$(CC) $(LFLAGS) $^ -o $@
+        $(CC) $(LFLAGS) $^ -o $@
 
 %.o: %.c
-	$(CC) -c $(CFLAGS) $(OFLAGS) $(DFLAGS) $< -o $@
+        $(CC) -c $(CFLAGS) $(OFLAGS) $(DFLAGS) $< -o $@
 
-main.o:
+main.o: main.c
 
 clean:
-	rm -Rf *~ *.o $(TARGET)
+        rm -Rf *~ *.o $(TARGET)

@@ -132,7 +132,7 @@
 ;; cmake
 (use-package cmake-mode
   :defer t
-  :mode ("CMakeLists\.txt\'" "\.cmake(.in)?\'"))
+  :mode ("CMakeLists.txt" "\.cmake(.in)?\'"))
 
 ;; auto-complete
 (use-package auto-complete

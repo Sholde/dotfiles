@@ -108,7 +108,18 @@ copy()
     re='^[0-9]*$'
 
     # Check number of argument
-    if  [ $# == 2 ] ; then
+    if  [ $# == 1 ] ; then
+
+        # Check if $1 is a file
+        if [ ! -f $1 ] ; then
+            echo "Error: $1 is not a valid file."
+            return 1
+        fi
+
+        # Real command
+        cat $1 | xclip -sel clip
+
+    elif  [ $# == 2 ] ; then
 
         # Check if $1 is a file
         if [ ! -f $1 ] ; then

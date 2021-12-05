@@ -67,5 +67,6 @@ volume master {
 
 tztime local {
         locale = "en_US.UTF-8"
+        timezone = "Etc/UTC"
         format = "%a %d %b %Y - %H:%M:%S"
 }

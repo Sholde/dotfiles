@@ -268,3 +268,6 @@
 (use-package gnuplot-mode
   :defer 0
   :mode ("\\.\\(gp\\|gnuplot\\)$"))
+
+;; cuda
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . c-mode))

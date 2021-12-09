@@ -225,7 +225,7 @@
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-  ;; Enable highliting src in org mode
+  ;; Enable highlighting src in org mode
   (setq-default org-src-fontify-natively t)
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -266,5 +266,5 @@
 
 ;; gnuplot
 (use-package gnuplot-mode
-  :defer t
-  :mode ("\.pg\'"))
+  :defer 0
+  :mode ("\\.\\(gp\\|gnuplot\\)$"))

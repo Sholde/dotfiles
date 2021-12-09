@@ -251,15 +251,20 @@
 (add-to-list 'auto-mode-alist '("\\.bash.*\\'" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.config\\'" . shell-script-mode))
 
-;; nlinum
-(use-package nlinum-relative
-  :defer 0
-  :ensure t
-  :config
-  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-  (setq-default nlinum-relative-redisplay-delay 0)      ;; delay
-  (setq-default nlinum-relative-current-symbol "")      ;; or "" for display current line number
-  (setq-default nlinum-relative-offset 0)               ;; 1 if you want 0, 2, 3...
-  (setq-default nlinum-format "%4d\u2502")              ;; adding padding
-  (global-nlinum-relative-mode)
-  )
+;;;; nlinum
+;;(use-package nlinum-relative
+;;  :defer 0
+;;  :ensure t
+;;  :config
+;;  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+;;  (setq-default nlinum-relative-redisplay-delay 0)      ;; delay
+;;  (setq-default nlinum-relative-current-symbol "")      ;; or "" for display current line number
+;;  (setq-default nlinum-relative-offset 0)               ;; 1 if you want 0, 2, 3...
+;;  (setq-default nlinum-format "%4d\u2502")              ;; adding padding
+;;  (global-nlinum-relative-mode)
+;;  )
+
+;; gnuplot
+(use-package gnuplot-mode
+  :defer t
+  :mode ("\.pg\'"))

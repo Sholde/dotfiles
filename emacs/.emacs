@@ -61,6 +61,10 @@
 (setq-default word-wrap t)                    ;; enable word-wrap
 (add-hook 'text-mode-hook 'turn-on-auto-fill) ;; auto-fill
 (add-hook 'prog-mode-hook 'turn-on-auto-fill) ;; auto-fill
+(add-hook 'text-mode-hook
+          #'display-fill-column-indicator-mode) ;; add bar at column 80
+(add-hook 'prog-mode-hook
+          #'display-fill-column-indicator-mode) ;; add bar at column 80
 
 ;; If indent-tabs-mode is off, untabify before saving
 (add-hook 'write-file-hooks

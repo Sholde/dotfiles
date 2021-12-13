@@ -86,9 +86,10 @@ if [[ ${EUID} == 0 ]] ; then
 else
     # PS1
     PS1='\[\033[1;34m\][$?] '                                       # error
+    PS1+='\[\033[1;33m\]$(date +%H:%M:%S) '                         # time
     PS1+='\[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'   # usual prompt
     PS1+='\[\033[1;31m\]$(parse_git_branch)$(parse_git_status) '    # git
-    PS1+='\[\033[1;33m\](${timer_show}) '                           # time
+    PS1+='\[\033[1;33m\](${timer_show}) '                           # delay
 
     if [ $(id -u) -eq 0 ] ; then
         PS1+='\[\033[1;31m\]#\[\033[00m\] '                         # root

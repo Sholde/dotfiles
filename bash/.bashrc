@@ -141,3 +141,9 @@ fi
 if [ -f ~/.bash_export ] ; then
     source ~/.bash_export
 fi
+
+#######################################
+#          Run alias at start         #
+#######################################
+
+aot

@@ -326,6 +326,11 @@ fuqit()
 # aot
 aot()
 {
+    # Test if internet works
+    if ! $(ping -4 -w 1 8.8.8.8 > /dev/null) ; then
+        return 1
+    fi
+
     # Ask streaming-integrale.com
     curl -s https://streaming-integrale.com/movie/lattaque-des-titans-chronicles/ > aot_season_4_vf.html
     yes_no=$(cat aot_season_4_vf.html | grep "<span>VF</span>")
@@ -337,7 +342,7 @@ aot()
         echo "AoT Season 4 in VF is AVAILABLE ! GO ! GO ! GO !"
         echo "================================================"
     else
-        return 1
+        return 2
     fi
 
 }

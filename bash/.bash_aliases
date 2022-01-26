@@ -32,7 +32,7 @@ alias mv="mv -i"
 alias mkdir="mkdir -p"
 
 # pacman
-alias pacman="pacman --color always"
+alias pacman="pacman --color=auto"
 alias psync="sudo pacman -Sy"
 alias update="sudo pacman -Syu"
 

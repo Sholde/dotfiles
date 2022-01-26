@@ -2,6 +2,9 @@
 #                Alias                #
 #######################################
 
+# Sudo (to enable alias when using sudo command)
+alias sudo="sudo "
+
 # Default
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
@@ -29,6 +32,7 @@ alias mv="mv -i"
 alias mkdir="mkdir -p"
 
 # pacman
+alias pacman="pacman --color always"
 alias psync="sudo pacman -Sy"
 alias update="sudo pacman -Syu"
 

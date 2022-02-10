@@ -73,6 +73,21 @@ alias zoneinfo="cat /proc/zoneinfo"
 # poweroff
 alias off="shutdown now"
 
+# ip
+## Global ip
+alias gip="curl https://ifconfig.co"
+## Local ip
+alias lip="hostname -i | cut -d' ' -f1"
+
+# UI
+alias tbmail="thunderbird 2> /dev/null &"
+alias discord="discord 2> /dev/null &"
+alias evince="evince 2> /dev/null "
+alias scilab="~/Téléchargements/scilab-6.1.0/bin/scilab 2>/dev/null &"
+
+# lock screen
+alias lock="i3lock -c 000000"
+
 # octal permission
 ols() { stat -c "%A %a %n" ${@} ; }
 
@@ -167,18 +182,6 @@ copy()
 
     fi
 }
-
-# ip
-## Global ip
-alias gip="curl https://ifconfig.co"
-## Local ip
-alias lip="hostname -i | cut -d' ' -f1"
-
-# UI
-alias tbmail="thunderbird 2> /dev/null &"
-alias discord="discord 2> /dev/null &"
-alias evince="evince 2> /dev/null "
-alias scilab="~/Téléchargements/scilab-6.1.0/bin/scilab 2>/dev/null &"
 
 #
 ## tarball - archive generator
@@ -331,7 +334,7 @@ fuqit()
 aot()
 {
     # Test if internet works
-    if ! $(ping -4 -w 1 8.8.8.8 > /dev/null) ; then
+    if ! $(ping -4 -c 1 8.8.8.8 > /dev/null) ; then
         return 1
     fi
 
@@ -346,7 +349,7 @@ aot()
         echo "AoT Season 4 in VF is AVAILABLE ! GO ! GO ! GO !"
         echo "================================================"
     else
-        return 2
+        return 0
     fi
 
 }

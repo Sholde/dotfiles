@@ -37,8 +37,10 @@ ethernet _first_ {
 }
 
 battery all {
-        format = "%status %percentage"
+        format = "%status %percentage %emptytime"
         format_down = "No battery"
+        format_percentage = "%.0f%s"
+        low_threshold = 30
 }
 
 cpu_usage {
@@ -67,5 +69,5 @@ volume master {
 
 tztime local {
         locale = "en_US.UTF-8"
-        format = "%a %d %b %Y - %H:%M:%S"
+        format = "%a %d %b %Y ― %H:%M:%S"
 }

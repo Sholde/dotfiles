@@ -33,15 +33,15 @@ wireless _first_ {
 }
 
 ethernet _first_ {
-        format_up = "E: %ip"
+        format_up = "E: %essid (%ip)"
         format_down = "E: down"
 }
 
 battery all {
-        format = "%status %percentage %emptytime"
+        format = "%status %percentage %remaining"
         format_down = "No battery"
         format_percentage = "%.0f%s"
-        low_threshold = 30
+        low_threshold = 50
 }
 
 cpu_temperature 0 {

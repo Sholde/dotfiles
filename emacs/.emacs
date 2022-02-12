@@ -162,6 +162,9 @@
   :defer 1
   :mode ("\.c\'" "\.h\'" "\.cc\'" "\.cpp\'" "\.c++\'" "\.hh\'"))
 
+;; cuda
+(add-to-list 'auto-mode-alist '("\\.cu\\'" . c-mode))
+
 ;; my scilab highlighting
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
@@ -268,6 +271,3 @@
 (use-package gnuplot-mode
   :defer 0
   :mode ("\\.\\(gp\\|gnuplot\\)$"))
-
-;; cuda
-(add-to-list 'auto-mode-alist '("\\.cu\\'" . c-mode))

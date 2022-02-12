@@ -42,6 +42,7 @@ battery all {
         format_down = "No battery"
         format_percentage = "%.0f%s"
         low_threshold = 50
+        threshold_type = percentage
 }
 
 cpu_temperature 0 {

@@ -28,12 +28,12 @@ ipv6 {
 }
 
 wireless _first_ {
-        format_up = "W: %essid (%ip)"
+        format_up = "W: %essid"
         format_down = "W: down"
 }
 
 ethernet _first_ {
-        format_up = "E: %essid (%ip)"
+        format_up = "E: %essid"
         format_down = "E: down"
 }
 

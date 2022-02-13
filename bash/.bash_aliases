@@ -77,13 +77,12 @@ alias off="shutdown now"
 ## Global ip
 alias gip="curl https://ifconfig.co"
 ## Local ip
-alias lip="hostname -i | cut -d' ' -f1"
+lip() { ip addr | grep inet | sed -n 2p | awk '{print $2}' | cut -d'/' -f1 ; }
 
 # UI
 alias tbmail="thunderbird 2> /dev/null &"
 alias discord="discord 2> /dev/null &"
-alias evince="evince 2> /dev/null "
-alias scilab="~/Téléchargements/scilab-6.1.0/bin/scilab 2>/dev/null &"
+alias evince="evince ${1} 2> /dev/null"
 
 # lock screen
 alias lock="i3lock -c 000000"

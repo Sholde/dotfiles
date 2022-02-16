@@ -28,12 +28,13 @@ ipv6 {
 }
 
 wireless _first_ {
-        format_up = "W: %essid"
+        format_up = "W: %essid (%quality)"
         format_down = "W: down"
+        format_quality = "%3d%s"
 }
 
 ethernet _first_ {
-        format_up = "E: %essid"
+        format_up = "E: %essid (%speed)"
         format_down = "E: down"
 }
 
@@ -41,7 +42,7 @@ battery all {
         format = "%status %percentage %remaining"
         format_down = "No battery"
         format_percentage = "%.0f%s"
-        low_threshold = 50
+        low_threshold = 30
         threshold_type = percentage
 }
 
@@ -58,7 +59,7 @@ cpu_usage {
 
 memory {
         format = "RAM: %percentage_used"
-        threshold_degraded = 50%
+        threshold_degraded = 30%
         threshold_critical = 10%
 }
 

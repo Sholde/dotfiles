@@ -69,8 +69,8 @@ disk "/" {
 }
 
 volume master {
-        format = "🔊: %volume"
-        format_muted = "🔇: %volume"
+        format = "SOUND: %volume"
+        format_muted = "SOUND: %volume"
         device = "pulse"
         mixer = "Master"
         mixer_idx = 0

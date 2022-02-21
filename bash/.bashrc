@@ -99,12 +99,6 @@ else
 
     # PS2
     PS2='\[\033[01;32m\]continue ->\[\033[00m\] '
-
-    # Color alias
-    alias ls='ls --color=auto'
-    alias grep='grep --colour=auto'
-    alias egrep='egrep --colour=auto'
-    alias fgrep='fgrep --colour=auto'
 fi
 
 # history length

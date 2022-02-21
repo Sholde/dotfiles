@@ -11,6 +11,14 @@ alias free='free -m'                      # show sizes in MB
 alias more="less"                         # less is better
 alias np='nano -w PKGBUILD'
 
+# Color alias
+alias ls='ls --color=auto'
+alias grep='grep --colour=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias diff='diff --color=auto'
+alias pacman="pacman --color=auto"
+
 # work
 alias cdwork="cd ~/dev"
 
@@ -32,7 +40,6 @@ alias mv="mv -i"
 alias mkdir="mkdir -p"
 
 # pacman
-alias pacman="pacman --color=auto"
 alias psync="sudo pacman -Sy"
 alias update="sudo pacman -Syu"
 

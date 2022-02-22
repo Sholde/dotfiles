@@ -46,6 +46,9 @@ alias update="sudo pacman -Syu"
 # emacs
 alias emacs="emacs -nw"
 
+# nomacs
+alias nomacs="nomacs ${1} 2>/dev/null &"
+
 # Find alias
 fhere() { find . -name ${@} ; }
 fuser() { find ~/ -name ${@} ; }

@@ -46,9 +46,6 @@ alias update="sudo pacman -Syu"
 # emacs
 alias emacs="emacs -nw"
 
-# nomacs
-alias nomacs="nomacs ${1} 2>/dev/null &"
-
 # Find alias
 fhere() { find . -name ${@} ; }
 fuser() { find ~/ -name ${@} ; }
@@ -93,6 +90,7 @@ lip() { ip addr | grep inet | sed -n 2p | awk '{print $2}' | cut -d'/' -f1 ; }
 alias tbmail="thunderbird 2> /dev/null &"
 alias discord="discord 2> /dev/null &"
 alias evince="evince ${1} 2> /dev/null"
+alias nomacs="nomacs ${1} 2> /dev/null &"
 
 # lock screen
 alias lock="i3lock -c 000000"

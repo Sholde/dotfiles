@@ -61,7 +61,7 @@ tren() { trans -s fr -t en "${@}" ; }
 trfr() { trans -s en -t fr "${@}" ; }
 
 # search expression in all file here
-search() { grep -re "${1}" * ; }
+search() { grep -n -re "${1}" * ; }
 
 # count word in file
 cw() { cat ${1} | wc -w ; }

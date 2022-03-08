@@ -61,7 +61,11 @@ function timer_stop()
 [[ $- != *i* ]] && return
 
 # Display new terminal message
-cat ~/.sholde
+if $(which neofetch > /dev/null) ; then
+    neofetch --off --color_blocks off
+else
+    cat ~/.sholde
+fi
 
 # Bash completion
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion

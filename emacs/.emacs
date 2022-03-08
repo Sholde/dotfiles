@@ -271,3 +271,6 @@
 (use-package gnuplot-mode
   :defer 0
   :mode ("\\.\\(gp\\|gnuplot\\)$"))
+
+;; correct spelling and typographical errors in a file
+(setq ispell-program-name "hunspell")

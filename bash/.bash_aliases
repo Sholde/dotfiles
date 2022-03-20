@@ -346,17 +346,30 @@ aot()
     fi
 
     # Ask streaming-integrale.com
-    curl -s https://streaming-integrale.com/movie/lattaque-des-titans-chronicles/ > aot_season_4_vf.html
-    yes_no=$(cat aot_season_4_vf.html | grep "<span>VF</span>")
-    rm aot_season_4_vf.html
+    curl -s https://streaming-integrale.com/episode/lattaque-des-titans-saison-4-episode-1/ > aot_season_4_vf.html
+    cat aot_season_4_vf.html | grep "<span>VF</span>" -o > /dev/null
 
     # Print result
-    if [ "${yes_no}" != "" ] ; then
+    if [ "$?" == "0" ] ; then
+        # Pretty print
         echo "================================================"
         echo "AoT Season 4 in VF is AVAILABLE ! GO ! GO ! GO !"
         echo "================================================"
-    else
-        return 0
+
+        # Look for the number of episodes that are in French
+        last_episode=0
+
+        for i in {1..26} ; do
+            curl -s https://streaming-integrale.com/episode/lattaque-des-titans-saison-4-episode-$i/ | grep "<span>VF</span>" -o > /dev/null
+            if [ "$?" == "0" ] ; then
+                last_episode=$i
+            fi
+        done
+
+        echo "Up to episode $last_episode !"
     fi
 
+    #
+    rm aot_season_4_vf.html
+    return 0
 }

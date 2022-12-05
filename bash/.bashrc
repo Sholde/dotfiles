@@ -61,11 +61,7 @@ function timer_stop()
 [[ $- != *i* ]] && return
 
 # Display new terminal message
-if $(which neofetch > /dev/null) ; then
-    neofetch --off --color_blocks off
-else
-    cat ~/.sholde
-fi
+cat ~/.sholde
 
 # Bash completion
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
@@ -139,9 +135,3 @@ fi
 if [ -f ~/.bash_export ] ; then
     source ~/.bash_export
 fi
-
-#######################################
-#          Run alias at start         #
-#######################################
-
-aot

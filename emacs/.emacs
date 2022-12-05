@@ -11,17 +11,9 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; PROFILING
-
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
-
-;; SETTING VARIABLE
+;;;;;;;;;;;;;;;;;;;;;;
+;; SETTING VARIABLE ;;
+;;;;;;;;;;;;;;;;;;;;;;
 
 ;; disable useless thing
 (setq inhibit-startup-message t)
@@ -30,7 +22,6 @@
 (tool-bar-mode -1)          ; Disable the toolbar
 (tooltip-mode -1)           ; Disable tooltips
 (set-fringe-mode 10)        ; Give some breathing room
-
 (menu-bar-mode -1)          ; Disable the menu bar
 
 ;; Set encoding
@@ -88,28 +79,42 @@
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
 
-;; COMMAND
+;;;;;;;;;;;;;
+;; COMMAND ;;
+;;;;;;;;;;;;;
 
-;; Begin new line above
+;; Some functions
+(defun ispell-change-fr ()
+  (interactive "p") ; Calleb from M-x
+  (call-interactively #'(ispell-change-dictionary fr_FR)))
+
+(defun ispell-change-en ()
+  (interactive "p") ; Calleb from M-x
+  (call-interactively #'ispell-change-dictionary en_US))
+
+(defun fd-switch-dictionary()
+      (interactive)
+      (let* ((change (if (string= dic "francais") "english" "francais")))
+        (ispell-change-dictionary change)
+        (message "Dictionary switched to %s" change)
+        ))
+
 (defun my/begin-line-above (times)
   (interactive "p") ; Calleb from M-x
   (move-beginning-of-line 1)
   (save-excursion
     (newline times)))
 
-(global-set-key (kbd "M-o")
-                'my/begin-line-above)
-
-;; Begin new line beside
 (defun my/begin-line-beside (times)
   (interactive "p") ; Calleb from M-x
   (move-end-of-line 1)
   (newline times))
 
+;; Some controls
+(global-set-key (kbd "M-o")
+                'my/begin-line-above)
 (global-set-key (kbd "C-o")
                 'my/begin-line-beside)
-
-;; Some controls
 (global-set-key [(control z)] 'undo)
 (global-set-key [(meta g)] 'goto-line)
 (global-set-key (kbd "M-n")
@@ -117,7 +122,9 @@
 (global-set-key (kbd "M-p")
                 (lambda () (interactive) (previous-line 5)))
 
-;; PACKAGE
+;;;;;;;;;;;;;
+;; PACKAGE ;;
+;;;;;;;;;;;;;
 
 ;; Enable gnu, melpa and melpa-stable repo
 (setq package-archives
@@ -274,3 +281,15 @@
 
 ;; correct spelling and typographical errors in a file
 (setq ispell-program-name "hunspell")
+
+;;;;;;;;;;;;;;;
+;; PROFILING ;;
+;;;;;;;;;;;;;;;
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))

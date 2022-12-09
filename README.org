@@ -4,11 +4,11 @@
 
 * Configuration
 
-- Window manager: i3
-- Bar: polybar
-- App launcher: rofi
-- Text editor: emacs
-- Notification daemon: dunst
+- *Window manager:* i3
+- *Bar:* polybar
+- *App launcher:* rofi
+- *Text editor:* emacs
+- *Notification daemon:* dunst
 
 * Screenshot
 

@@ -51,7 +51,6 @@
 (setq-default indent-tabs-mode nil)           ;; space > tabs
 (setq-default word-wrap t)                    ;; enable word-wrap
 (add-hook 'text-mode-hook 'turn-on-auto-fill) ;; auto-fill
-;;(add-hook 'prog-mode-hook 'turn-on-auto-fill) ;; auto-fill
 (add-hook 'text-mode-hook
           #'display-fill-column-indicator-mode) ;; add bar at column 80
 (add-hook 'prog-mode-hook
@@ -130,15 +129,7 @@
 (setq package-archives
       '(("gnu" . "http://elpa.gnu.org/packages/")
         ("melpa" . "http://melpa.org/packages/")
-        ("melpa-stable" . "https://stable.melpa.org/packages/"))
-      package-quickstart t)
-
-;; Ensure that use-package is installed
-(unless (and (fboundp 'package-installed-p)
-             (package-installed-p 'use-package))
-  (package-initialize)
-  (package-refresh-contents)
-  (package-install 'use-package))
+        ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
 ;; cmake
 (use-package cmake-mode
@@ -177,15 +168,7 @@
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 
 ;; Theme
-;;(load "~/.emacs.d/aanila-theme.el")
-(use-package badwolf-theme
-  :defer t
-  :ensure t
-  :init (load-theme 'badwolf t))
-;;(add-to-list 'default-frame-alist '(background-color . "black"))
-;;(set-face-background 'default "black")
-;;(add-to-list 'default-frame-alist '(display-line-numbers . "black"))
-;;(setq-default customize-group '(display-line-numbers . "black"))
+(setq frame-background-mode 'dark)
 
 ;; auto insert pair
 (use-package electric-pair-mode

@@ -1,14 +1,18 @@
-.PHONY: all install
-
+################################################################################
+.PHONY: all
 all: install
 
+################################################################################
+.PHONY: install
 install:
-	cp -rf .bash_aliases ~/.bash_aliases
-	cp -rf .bash_export ~/.bash_export
-	cp -rf .bashrc ~/.bashrc
-	cp -rf .english.txt ~/.english.txt
-	cp -rf .sholde ~/.sholde
-	cp -rf .makefile.template ~/.makefile.template
+	cp -f .bash_aliases ~/.bash_aliases
+	cp -f .bash_export ~/.bash_export
+	cp -f .bashrc ~/.bashrc
+	cp -f .english.txt ~/.english.txt
+	cp -f .sholde ~/.sholde
+	cp -f .makefile.template ~/.makefile.template
 
+################################################################################
+.PHONY: clean
 clean:
-	rm -Rf *~ .*~
+	rm -rf *~ .*~

@@ -1,7 +1,14 @@
-.PHONY: all install
-
+################################################################################
+.PHONY: all
 all: install
 
+################################################################################
+.PHONY: install
 install:
 	mkdir -p ~/.config/zathura
-	cp -Rf zathurarc ~/.config/zathura/zathurarc
+	cp -f zathurarc ~/.config/zathura/zathurarc
+
+################################################################################
+.PHONY: clean
+clean:
+	rm -rf *~

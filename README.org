@@ -1,0 +1,16 @@
+#+TITLE: My Dotfiles
+#+AUTHOR: Sholde
+#+DATE: December 2022
+
+* Configuration
+
+- Window manager: i3
+- Bar: polybar
+- App launcher: rofi
+- Text editor: emacs
+- Notification daemon: dunst
+
+* Screenshot
+
+#+ATTR_HTML: :title Workflow :align center
+[[https://github.com/sholde/dotfiles/blob/master/.screenshot/screenshot.png]]

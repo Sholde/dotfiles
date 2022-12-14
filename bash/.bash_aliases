@@ -6,76 +6,97 @@
 alias sudo="sudo "
 
 # Default
-alias df='df -h'                          # human-readable sizes
-alias free='free -m'                      # show sizes in MB
+alias df="df -h"                          # human-readable sizes
+alias free="free -m"                      # show sizes in MB
 alias more="less"                         # less is better
-alias np='nano -w PKGBUILD'
+alias np="nano -w PKGBUILD"
 
 # Color alias
-alias ls='ls --color=auto'
-alias grep='grep --colour=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias diff='diff --color=auto'
+alias ls="ls --color=auto"
+alias grep="grep --colour=auto"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias diff="diff --color=auto"
 alias pacman="pacman --color=auto"
 
 # work
-alias cdwork="cd ~/dev"
+alias cdwork="cd ~/Documents"
 
 # list
+alias l="ls"
 alias ll="ls -lh"
 alias la="ls -a"
 alias lla="ls -lha"
 alias lsc="ls --format=single-column"
 alias lsca="ls --format=single-column -a"
+alias lt="ls -lh -S -1"
+alias left="ls -lh -t -1"
+## octal permission
+ols() { stat -c "%A %a %n" ${@} ; }
 
 # clean
 alias clean="rm -Rf *~ .*~"
+alias c="clear"
 
 # confirm before owerwriting
-alias cp="cp -i"
-alias mv="mv -i"
+alias cp="cp -iv"
+alias mv="mv -riv"
 
 # mkdir
-alias mkdir="mkdir -p"
+alias mkdir="mkdir -vp"
+
+# cd
+alias ..="cd .."
+alias .2="cd ../../"
+alias .3="cd ../../../"
+alias .4="cd ../../../../"
+alias .5="cd ../../../../.."
+
+# path
+alias path="echo -e ${PATH//:/\\n}"
 
 # pacman
-alias psync="sudo pacman -Sy"
 alias update="sudo pacman -Syu"
+alias updatey="sudo pacman -Syu -noconfirm"
+
+# top
+alias topmem="ps auxf | sort -nr -k 4 | head -1"
+alias topcpu="ps auxf | sort -nr -k 3 | head -1"
 
 # emacs
 alias emacs="emacs -nw"
 
 # Find alias
-fhere() { find . -name ${@} ; }
-fuser() { find ~/ -name ${@} ; }
-fsafe() { find ${@} 2> >(grep -v Permission) ; }
+alias ff="find . -type f -iname"
+alias fsafe="find . -type f ${@} 2> >(grep -v Permission)"
 
 # locate command
 locate() { find / -name ${1} 2> >(grep -v Permission) ; }
 
-# translate fr to en
-tren() { trans -s fr -t en "${@}" ; }
-
-# translate en to fr
-trfr() { trans -s en -t fr "${@}" ; }
-
 # search expression in all file here
 search() { grep -n -re "${1}" * ; }
 
-# count word in file
+# translate
+## translate fr to en
+tren() { trans -s fr -t en "${@}" ; }
+## translate en to fr
+trfr() { trans -s en -t fr "${@}" ; }
+
+# count
+## count word in file
 cw() { cat ${1} | wc -w ; }
-
-# count line in file
+## count line in file
 cl() { cat ${1} | wc -l ; }
-
-# count all in file
-ca() { cat ${1} | wc ; }
+## count file in the directory
+alias count="find . -type f | wc -l"
 
 # info
 alias cpuinfo="cat /proc/cpuinfo"
 alias meminfo="cat /proc/meminfo"
 alias zoneinfo="cat /proc/zoneinfo"
+
+# mount
+alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
 
 # poweroff
 alias off="shutdown now"
@@ -95,34 +116,9 @@ alias nomacs="nomacs ${1} 2> /dev/null"
 # lock screen
 alias lock="i3lock -c 000000"
 
-# octal permission
-ols() { stat -c "%A %a %n" ${@} ; }
-
-# timer
-timer()
-{
-    if [ ${1} -ge 1 ] ; then
-        for i in `seq ${1} -1 1` ; do
-            echo -ne "\033[0K\r${i} seconds left" ;
-            sleep 1 ;
-        done
-        echo -ne "\033[0K\rWaiting ${1} seconds\n" ;
-    fi
-}
-
-# learn english 3,000 most common word
-learn()
-{
-    # Choose word
-    LINE=$(echo "$RANDOM % 3000 + 1" | bc)
-    WORD=$(cat ~/.english.txt | sed -n $LINE"p")
-
-    # Display in color the word
-    echo -e "\033[1;31m"$WORD"\033[00m"
-
-    # Translate
-    trans -s en -t fr "$WORD"
-}
+# tar
+alias tgz="tar -czvf"
+alias untar='tar -xvf'
 
 # Debug mpi program
 mpidebug() { mpirun -np $1 xfce4-terminal -e "gdb $2" ; }
@@ -265,13 +261,13 @@ EOF
 cfile()
 {
     # Code file
-    cat > $1.c <<EOF
+    cat > ${1}.c <<EOF
 #include "${1}.h"
 EOF
 
     # Header file
-    upper_header=$(echo $1 | tr [:lower:] [:upper:])
-    cat > $1.h <<EOF
+    upper_header=$(echo ${1} | tr [:lower:] [:upper:])
+    cat > ${1}.h <<EOF
 #ifndef _${upper_header}_H_
 #define _${upper_header}_H_
 
@@ -282,94 +278,16 @@ EOF
 ccfile()
 {
     # Code file
-    cat > $1.cc <<EOF
+    cat > ${1}.cc <<EOF
 #include "${1}.hh"
 EOF
 
     # Header file
-    upper_header=$(echo $1 | tr [:lower:] [:upper:])
-    cat > $1.hh <<EOF
+    upper_header=$(echo ${1} | tr [:lower:] [:upper:])
+    cat > ${1}.hh <<EOF
 #ifndef _${upper_header}_HH_
 #define _${upper_header}_HH_
 
 #endif // _${upper_header}_HH_
 EOF
-}
-
-genmake()
-{
-    # Generate basic makefile
-    cat ~/.makefile.template > makefile
-}
-
-# fuqit
-fuqit()
-{
-    # Store
-    pwd_var=$(pwd)
-
-    # Test if we are in the HOME directory
-    if [ "${pwd_var}" == "${HOME}" ] ; then
-        echo "You are in the home directory."
-        echo "path: ${pwd_var}"
-        return 1
-    fi
-
-    # Test if we are not in the HOME directory
-    res=$(echo ${pwd_var} | grep -i "${HOME}")
-    if [ "${res}" == "" ] ; then
-        echo "You are NOT in the home directory."
-        echo "path: ${pwd_var}"
-        return 2
-    fi
-
-    # Remove file
-    echo "You are in a subdirectory of home directory."
-    echo "path: ${pwd_var}"
-
-    echo -n "remove:"
-    for f in $(ls ${pwd_var}) ; do
-        echo -n " ${f}"
-    done
-    echo ""
-    echo ""
-
-    rm -Rfi *
-}
-
-# aot
-aot()
-{
-    # Test if internet works
-    if ! $(ping -4 -c 1 8.8.8.8 > /dev/null) ; then
-        return 1
-    fi
-
-    # Ask streaming-integrale.com
-    curl -s https://streaming-integrale.com/episode/lattaque-des-titans-saison-4-episode-1/ > aot_season_4_vf.html
-    cat aot_season_4_vf.html | grep "<span>VF</span>" -o > /dev/null
-
-    # Print result
-    if [ "$?" == "0" ] ; then
-        # Pretty print
-        echo "================================================"
-        echo "AoT Season 4 in VF is AVAILABLE ! GO ! GO ! GO !"
-        echo "================================================"
-
-        # Look for the number of episodes that are in French
-        last_episode=0
-
-        for i in {1..26} ; do
-            curl -s https://streaming-integrale.com/episode/lattaque-des-titans-saison-4-episode-$i/ | grep "<span>VF</span>" -o > /dev/null
-            if [ "$?" == "0" ] ; then
-                last_episode=$i
-            fi
-        done
-
-        echo "Up to episode $last_episode !"
-    fi
-
-    #
-    rm aot_season_4_vf.html
-    return 0
 }

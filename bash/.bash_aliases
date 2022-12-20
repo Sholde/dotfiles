@@ -40,7 +40,7 @@ alias c="clear"
 
 # confirm before owerwriting
 alias cp="cp -iv"
-alias mv="mv -riv"
+alias mv="mv -iv"
 
 # mkdir
 alias mkdir="mkdir -vp"

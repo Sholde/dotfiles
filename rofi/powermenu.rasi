@@ -1,0 +1,119 @@
+/*******************************************************
+ * ROFI configs i3 powermenu for EndeavourOS
+ * Maintainer: joekamprad <joekamprad@endeavouros.com>
+ *******************************************************/
+
+*{
+    bgc:                           #282a2e;
+    cream:                         #c5c8c6;
+    yellow-alt:                    #f0c674;
+    black:                         #000000;
+}
+
+
+
+configuration {
+    font:                          "Roboto Condensed Bold 12";
+    show-icons:                    false;
+    icon-theme:                    "Qogir";
+    scroll-method:                 0;
+    disable-history:               false;
+    sidebar-mode:                  false;
+}
+
+window {
+    background-color:              @bgc;
+    border:                        5;
+    border-color:                  @bgc;
+    padding:                       0;
+    transparency:                  "real";
+    width:                         550px;
+    location:                      center;
+}
+
+listview {
+    border:                        0;
+    background-color:              @bgc;
+    lines:                         1;
+    columns:                       4;
+    scrollbar:                     false;
+}
+
+element {
+    background-color:              @bgc;
+    border:                        0px;
+    padding:                       15px ;
+}
+
+element-text {
+    background-color:              inherit;
+    text-color:                    @black;
+}
+
+element.normal.normal {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+element.normal.urgent {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+element.normal.active {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+element.selected.normal {
+    background-color:              @yellow-alt;
+    text-color:                    @black;
+}
+
+element.selected.urgent {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+element.selected.active {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+element.alternate.normal {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+element.alternate.urgent {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+element.alternate.active {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+mode-switcher {
+    border:                        2px 0px 0px ;
+    border-color:                  @bgc;
+}
+
+button {
+    spacing:                       0;
+    text-color:                    @cream;
+}
+
+button.selected {
+    background-color:              @bgc;
+    text-color:                    @cream;
+}
+
+case-indicator {
+    spacing:                       0;
+    text-color:                    @bgc;
+}
+
+mainbox {
+  children:                        [listview];
+}

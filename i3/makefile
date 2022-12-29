@@ -7,6 +7,7 @@ all: install
 install:
 	mkdir -p ~/.config/i3
 	cp -f config ~/.config/i3
+	cp -f powermenu.sh ~/.config/i3
 
 ################################################################################
 .PHONY: clean

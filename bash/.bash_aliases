@@ -5,6 +5,12 @@
 # Sudo (to enable alias when using sudo command)
 alias sudo="sudo "
 
+# Reload configuration
+alias reload="source ~/.bashrc"
+
+# Clear and Show my startup message
+alias clear="clear && cat ~/.sholde"
+
 # Default
 alias df="df -h"                          # human-readable sizes
 alias free="free -m"                      # show sizes in MB
@@ -114,7 +120,7 @@ alias evince="evince ${1} 2> /dev/null"
 alias nomacs="nomacs ${1} 2> /dev/null"
 
 # lock screen
-alias lock="i3lock -c 000000"
+alias lock="i3lock -i ~/Pictures/wallpapers/background/default.png"
 
 # tar
 alias tgz="tar -czvf"

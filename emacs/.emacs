@@ -18,10 +18,10 @@
 ;; disable useless thing
 (setq inhibit-startup-message t)
 
-(scroll-bar-mode -1)        ; Disable visible scrollbar
-(tool-bar-mode -1)          ; Disable the toolbar
+;(scroll-bar-mode -1)        ; Disable visible scrollbar
+;(tool-bar-mode -1)          ; Disable the toolbar
+;(set-fringe-mode 10)        ; Give some breathing room
 (tooltip-mode -1)           ; Disable tooltips
-(set-fringe-mode 10)        ; Give some breathing room
 (menu-bar-mode -1)          ; Disable the menu bar
 
 ;; Set encoding
@@ -145,7 +145,7 @@
   :init (ac-config-default))
 
 ;; latex completion
-(load "~/.emacs.d/auto-complete-latex.el")
+(load "~/.emacs.d/own-mode/auto-complete-latex.el")
 (use-package auto-complete-latex
   :defer 1
   :mode ("\.tex\'"))

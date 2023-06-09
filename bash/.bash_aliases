@@ -59,11 +59,10 @@ alias .4="cd ../../../../"
 alias .5="cd ../../../../.."
 
 # path
-alias path="echo -e ${PATH//:/\\n}"
-
-# pacman
-alias update="sudo pacman -Syu"
-alias updatey="sudo pacman -Syu -noconfirm"
+alias path="echo ${PATH} | sed 's/:/\n/g'"
+alias ldpath="echo ${LD_LIBRARY_PATH} | sed 's/:/\n/g'"
+alias libpath="echo ${LIBRARY_PATH} | sed 's/:/\n/g'"
+alias cpath="echo ${CPATH} | sed 's/:/\n/g'"
 
 # top
 alias topmem="ps auxf | sort -nr -k 4 | head -1"
@@ -102,7 +101,7 @@ alias meminfo="cat /proc/meminfo"
 alias zoneinfo="cat /proc/zoneinfo"
 
 # mount
-alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
+alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | grep -E ^/dev/ | sort"
 
 # poweroff
 alias off="shutdown now"
@@ -124,7 +123,7 @@ alias lock="i3lock -i ~/Pictures/wallpapers/background/default.png"
 
 # tar
 alias tgz="tar -czvf"
-alias untar='tar -xvf'
+alias untar='tar -xzvf'
 
 # Debug mpi program
 mpidebug() { mpirun -np $1 xfce4-terminal -e "gdb $2" ; }
@@ -236,64 +235,4 @@ ex()
 ecfunc()
 {
     cat ${1} | grep -P "^[a-zA-Z_]+[[:space:]]*[\*]?[a-zA-Z0-9_-]+\("
-}
-
-# Snippet
-cmain()
-{
-    cat > main.c <<EOF
-int main(int argc, char **argv)
-{
-  return 0;
-}
-EOF
-}
-
-mpimain()
-{
-    cat > main.c <<EOF
-#include <mpi.h>
-
-int main(int argc, char **argv)
-{
-  MPI_Init(&argc, &argv);
-
-  MPI_Finalize();
-  return 0;
-}
-EOF
-}
-
-cfile()
-{
-    # Code file
-    cat > ${1}.c <<EOF
-#include "${1}.h"
-EOF
-
-    # Header file
-    upper_header=$(echo ${1} | tr [:lower:] [:upper:])
-    cat > ${1}.h <<EOF
-#ifndef _${upper_header}_H_
-#define _${upper_header}_H_
-
-#endif // _${upper_header}_H_
-EOF
-}
-
-ccfile()
-{
-    # Code file
-    cat > ${1}.cc <<EOF
-#include "${1}.hh"
-EOF
-
-    # Header file
-    upper_header=$(echo ${1} | tr [:lower:] [:upper:])
-    cat > ${1}.hh <<EOF
-#ifndef _${upper_header}_HH_
-#define _${upper_header}_HH_
-
-#endif // _${upper_header}_HH_
-EOF
 }

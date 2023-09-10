@@ -15,34 +15,89 @@
 ;; SETTING VARIABLE ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-;; disable useless thing
-(setq inhibit-startup-message t)
+;; Disable garbage collection at startup
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.5) ;; defer gc futher back
 
-;(scroll-bar-mode -1)        ; Disable visible scrollbar
-;(tool-bar-mode -1)          ; Disable the toolbar
-;(set-fringe-mode 10)        ; Give some breathing room
+;; Package initialize occurs automatically, before `user-init-file' is
+;; loaded, but after `early-init-file'. We handle package
+;; initialization, so we must prevent Emacs from doing it early!
+(setq package-enable-at-startup nil)
+
+(setq inhibit-startup-message t) ;; disable startup message
+(setq visible-bell t)            ;; Set up the visible bell
+
+;; Inhibit resizing frame
+(setq frame-inhibit-implied-resize t)
+
+;; Disable useless things
+;; (scroll-bar-mode -1)        ; Disable visible scrollbar
+;; (tool-bar-mode -1)          ; Disable the toolbar
+;; (set-fringe-mode 10)        ; Give some breathing room
 (tooltip-mode -1)           ; Disable tooltips
 (menu-bar-mode -1)          ; Disable the menu bar
 
+;; Remember
+(recentf-mode 1)         ;; remenber recent opened files
+(setq history-length 25) ;; Save what you enter into minibuffer prompts
+(savehist-mode 1)        ;;
+(save-place-mode t)      ;; Save position in files
+
+;; Don't pop up UI dialogs when prompting
+(setq use-dialog-box nil)
+
+;; Theme
+(setq frame-background-mode 'dark)
+
+;; Revert buffers when the underlying file has changed
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
+
 ;; Set encoding
 (prefer-coding-system 'utf-8)
-
-;; Set up the visible bell
-(setq visible-bell t)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
 
 ;; Enable syntax color
 (global-font-lock-mode t)
 
 ;; Enable column number
 (column-number-mode t)
-
-;; Remove column number because it is redondant
 ;;(when (version<= "26.0.50" emacs-version)
 ;;  (global-display-line-numbers-mode))
+(require 'linum) ;; prefer linum over display-line-numbers
+(global-linum-mode)
+;; automatic lenght detection
+(custom-set-variables '(linum-format 'dynamic))
+(defadvice linum-update-window (around linum-dynamic activate)
+  (let* ((w (length (number-to-string
+                     (count-lines (point-min) (point-max)))))
+         (linum-format (concat "%" (number-to-string w) "d ")))
+    ad-do-it))
+(set-face-foreground 'linum "gold")
 
 ;; Parenthesis highlight
-(show-paren-mode 1)
+(show-paren-mode t)
 (setq show-paren-style 'mixed)
+
+;; Highlight current line
+(global-hl-line-mode t)
+(set-face-background 'hl-line "#3e4446")
+(set-face-foreground 'highlight nil)
+
+;; Display file size
+(size-indication-mode t)
+
+;; Coding style
+(setq-default c-default-style "bsd")
+(setq-default c-basic-offset 4)
+
+;; Show trailing whitespace
+(setq-default show-trailing-whitespace t)
+
+;; correct spelling and typographical errors in a file
+(setq ispell-program-name "hunspell")
 
 ;; Auto fill when the line is too long to display
 (setq c-ignore-auto-fill nil)                 ;; enable autofill
@@ -50,35 +105,19 @@
 (setq-default fill-column-indicator 80)       ;; fix indicator
 (setq-default indent-tabs-mode nil)           ;; space > tabs
 (setq-default word-wrap t)                    ;; enable word-wrap
-(add-hook 'text-mode-hook 'turn-on-auto-fill) ;; auto-fill
 (add-hook 'text-mode-hook
           #'display-fill-column-indicator-mode) ;; add bar at column 80
 (add-hook 'prog-mode-hook
           #'display-fill-column-indicator-mode) ;; add bar at column 80
 
-;; If indent-tabs-mode is off, untabify before saving
-(add-hook 'write-file-hooks
-          (lambda () (if (not indent-tabs-mode)
-                         (untabify (point-min) (point-max)))
-            nil ))
-
-;; Delete trailing whitespace on save
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
-
-;; Font
-(add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono-12"))
-
-;; Make startup faster by reducing the frequency of garbage
-;; collection. The default is 800 kilobytes. Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
-
-;; Make gc pauses faster by decreasing the threshold.
-(setq gc-cons-threshold (* 2 1000 1000))
-
-;; Coding style
-(setq-default c-default-style "bsd")
-(setq-default c-basic-offset 4)
+;; ;; If indent-tabs-mode is off, untabify before saving
+;; (add-hook 'write-file-hooks
+;;           (lambda () (if (not indent-tabs-mode)
+;;                          (untabify (point-min) (point-max)))
+;;             nil ))
+;;
+;; ;; Delete trailing whitespace on save
+;; (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 
 ;;;;;;;;;;;;;
 ;; COMMAND ;;
@@ -122,6 +161,9 @@
                 (lambda () (interactive) (next-line 5)))
 (global-set-key (kbd "M-p")
                 (lambda () (interactive) (previous-line 5)))
+(global-set-key (kbd "M-;") 'comment-line)
+(global-set-key (kbd "M-:") 'dabbrev-expand)
+(global-set-key (kbd "M-,") 'fill-region)
 
 ;;;;;;;;;;;;;
 ;; PACKAGE ;;
@@ -169,9 +211,6 @@
 (load "~/.emacs.d/own-mode/scilab-mode.el")
 (add-to-list 'auto-mode-alist '("\\.sci\\'" . scilab-mode))
 
-;; Theme
-(setq frame-background-mode 'dark)
-
 ;; auto insert pair
 (use-package electric-pair-mode
   :defer t
@@ -192,51 +231,6 @@
   :defer 1
   :mode ("\.org\'"))
 
-;; Export html
-(use-package htmlize
-  :defer 2
-  :mode ("\.org\'")
-  :init (progn
-          (setq org-html-htmlize-output-type 'inline-css)
-          (setq org-html-validation-link nil)
-          (setq org-export-html-postamble nil)
-          (setq org-export-html-extension "html")
-          (setq org-export-with-sub-superscripts nil)))
-
-;; Export latex
-(use-package ox-latex
-  :defer t
-  :mode ("\.org\'")
-  :config
-  (unless (boundp 'org-latex-classes)
-    (setq org-export-classes nil))
-  (add-to-list 'org-latex-classes
-               '("article"
-                 "\\documentclass[11pt, letterpaper]{article}
-         \\usepackage[document]{ragged2e}"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-  ;; Enable highlighting src in org mode
-  (setq-default org-src-fontify-natively t)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '(
-     (C .t)
-     (fortran .t)
-     (shell . t)
-     (python . t)
-     (R . t)
-     (emacs-lisp . t)
-     (lisp .t)
-     (haskell . t)
-     (perl . t)
-     (js . t)
-     )))
-
 ;; Jupyter Notebook in emacs
 (use-package ein
   :defer 1
@@ -246,26 +240,21 @@
 (add-to-list 'auto-mode-alist '("\\.bash.*\\'" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.config\\'" . shell-script-mode))
 
-;;;; nlinum
-;;(use-package nlinum-relative
-;;  :defer 0
-;;  :ensure t
-;;  :config
-;;  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-;;  (setq-default nlinum-relative-redisplay-delay 0)      ;; delay
-;;  (setq-default nlinum-relative-current-symbol "")      ;; or "" for display current line number
-;;  (setq-default nlinum-relative-offset 0)               ;; 1 if you want 0, 2, 3...
-;;  (setq-default nlinum-format "%4d\u2502")              ;; adding padding
-;;  (global-nlinum-relative-mode)
-;;  )
-
 ;; gnuplot
 (use-package gnuplot-mode
   :defer 0
   :mode ("\\.\\(gp\\|gnuplot\\)$"))
 
-;; correct spelling and typographical errors in a file
-(setq ispell-program-name "hunspell")
+;;;;;;;;;;;;;;;;;;;
+;; DEFER SETTING ;;
+;;;;;;;;;;;;;;;;;;;
+
+;; Make startup faster by reducing the frequency of garbage
+;; collection. The default is 800 kilobytes. Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Warn when opening files bigger than 100MB
+(setq large-file-warning-threshold 100000000)
 
 ;;;;;;;;;;;;;;;
 ;; PROFILING ;;

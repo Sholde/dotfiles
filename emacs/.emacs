@@ -53,6 +53,22 @@
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
 
+;; Save backup files in a specific directory
+(setq backup-directory-alist '(("." . "~/.emacs_saves")))
+
+;; Complete paths
+(ido-mode t)
+;; M-x mode
+(global-set-key
+ "\M-x"
+ (lambda ()
+   (interactive)
+   (call-interactively
+    (intern
+     (ido-completing-read
+      "M-x "
+      (all-completions "" obarray 'commandp))))))
+
 ;; Set encoding
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)

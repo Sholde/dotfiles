@@ -265,6 +265,14 @@
   :defer 1
   :mode ("\.org\'"))
 (add-hook 'org-mode-hook 'org-indent-mode)
+(require 'org-tempo)
+;; The following prevents <> from auto-pairing when electric-pair-mode is on.
+;; Otherwise, org-tempo is broken when you try to <s TAB...
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq-local electric-pair-inhibit-predicate
+                        `(lambda (c)
+                           (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 
 ;; Jupyter Notebook in emacs
 (use-package ein

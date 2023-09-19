@@ -43,8 +43,14 @@
 (savehist-mode 1)        ;;
 (save-place-mode t)      ;; Save position in files
 
+;; Select text and delete it by typing
+(delete-selection-mode 1)
+
 ;; Don't pop up UI dialogs when prompting
 (setq use-dialog-box nil)
+
+;; Enable mouse control
+(xterm-mouse-mode t)
 
 ;; Theme
 (setq frame-background-mode 'dark)
@@ -57,6 +63,8 @@
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
 
 ;; Complete paths
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
 (ido-mode t)
 ;; M-x mode
 (global-set-key
@@ -68,6 +76,15 @@
      (ido-completing-read
       "M-x "
       (all-completions "" obarray 'commandp))))))
+;; Display ido results vertically, rather than horizontally
+(setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
+(defun ido-disable-line-truncation () (set (make-local-variable 'truncate-lines) nil))
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-truncation)
+;; Define keybinding to navigate inside ido results
+(defun ido-define-keys () ;; C-n/p is more intuitive in vertical layout
+  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "C-p") 'ido-prev-match))
+(add-hook 'ido-setup-hook 'ido-define-keys)
 
 ;; Set encoding
 (prefer-coding-system 'utf-8)
@@ -94,6 +111,7 @@
 (set-face-foreground 'linum "gold")
 
 ;; Parenthesis highlight
+(setq show-paren-delay 0)
 (show-paren-mode t)
 (setq show-paren-style 'mixed)
 
@@ -246,6 +264,7 @@
 (use-package org-mode
   :defer 1
   :mode ("\.org\'"))
+(add-hook 'org-mode-hook 'org-indent-mode)
 
 ;; Jupyter Notebook in emacs
 (use-package ein

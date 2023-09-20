@@ -60,7 +60,9 @@
 (setq global-auto-revert-non-file-buffers t)
 
 ;; Save backup files in a specific directory
-(setq backup-directory-alist '(("." . "~/.emacs_saves")))
+(setq backup-directory-alist '((".*" . "~/.emacs_saves/")))
+(setq auto-save-file-name-transforms
+      `((".*" "~/.emacs_saves/" t)))
 
 ;; Complete paths
 (setq ido-enable-flex-matching t)

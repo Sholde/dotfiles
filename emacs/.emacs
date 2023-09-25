@@ -50,10 +50,14 @@
 (setq use-dialog-box nil)
 
 ;; Enable mouse control
-(xterm-mouse-mode t)
+;; (xterm-mouse-mode t)
 
 ;; Theme
 (setq frame-background-mode 'dark)
+
+;; Font
+(add-to-list 'default-frame-alist
+             '(font . "DejaVu Sans Mono-12"))
 
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode 1)
@@ -99,18 +103,24 @@
 
 ;; Enable column number
 (column-number-mode t)
-;;(when (version<= "26.0.50" emacs-version)
-;;  (global-display-line-numbers-mode))
-(require 'linum) ;; prefer linum over display-line-numbers
-(global-linum-mode)
-;; automatic lenght detection
-(custom-set-variables '(linum-format 'dynamic))
-(defadvice linum-update-window (around linum-dynamic activate)
-  (let* ((w (length (number-to-string
-                     (count-lines (point-min) (point-max)))))
-         (linum-format (concat "%" (number-to-string w) "d ")))
-    ad-do-it))
-(set-face-foreground 'linum "gold")
+;; display-line-numbers
+(when (version<= "26.0.50" emacs-version)
+  (set-face-background 'line-number-current-line "#3e4446")
+  (set-face-foreground 'line-number-current-line "gold")
+  ;; (setq-default display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode))
+;; linum
+(when (version<= emacs-version "26.0.49")
+  (require 'linum)
+  (global-linum-mode)
+  ;; automatic lenght detection
+  (custom-set-variables '(linum-format 'dynamic))
+  (defadvice linum-update-window (around linum-dynamic activate)
+    (let* ((w (length (number-to-string
+                       (count-lines (point-min) (point-max)))))
+           (linum-format (concat "%" (number-to-string w) "d ")))
+      ad-do-it))
+  (set-face-foreground 'linum "gold"))
 
 ;; Parenthesis highlight
 (setq show-paren-delay 0)
@@ -200,6 +210,7 @@
 (global-set-key (kbd "M-;") 'comment-line)
 (global-set-key (kbd "M-:") 'dabbrev-expand)
 (global-set-key (kbd "M-,") 'fill-region)
+(global-set-key (kbd "M-r") 'recentf-open-files)
 
 ;;;;;;;;;;;;;
 ;; PACKAGE ;;
@@ -275,6 +286,17 @@
             (setq-local electric-pair-inhibit-predicate
                         `(lambda (c)
                            (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+
+;; Export html
+(use-package htmlize
+  :defer 2
+  :mode ("\.org\'")
+  :init (progn
+          (setq org-html-htmlize-output-type 'inline-css)
+          (setq org-html-validation-link nil)
+          (setq org-export-html-postamble nil)
+          (setq org-export-html-extension "html")
+          (setq org-export-with-sub-superscripts nil)))
 
 ;; Jupyter Notebook in emacs
 (use-package ein

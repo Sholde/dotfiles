@@ -61,7 +61,11 @@ function timer_stop()
 [[ $- != *i* ]] && return
 
 # Display new terminal message
-cat ~/.sholde
+if [ "$(hostname)" == "nitro" ] ; then
+    cat ~/.profile_nitro
+else
+    cat ~/.sholde
+fi
 
 # Bash completion
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion

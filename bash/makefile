@@ -10,6 +10,7 @@ install:
 	cp -f .bashrc ~/.bashrc
 	cp -f .sholde ~/.sholde
 	cp -f .profile_nitro ~/.profile_nitro
+	cp -f .profile_nrv ~/.profile_nrv
 
 ################################################################################
 .PHONY: clean

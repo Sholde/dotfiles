@@ -63,6 +63,8 @@ function timer_stop()
 # Display new terminal message
 if [ "$(hostname)" == "nitro" ] ; then
     cat ~/.profile_nitro
+elif [ "$(hostname)" == "nrv" ] ; then
+    cat ~/.profile_nrv
 else
     cat ~/.sholde
 fi

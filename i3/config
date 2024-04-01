@@ -123,6 +123,8 @@ set $ws9 "9"
 set $ws10 "10"
 
 # Assignments
+assign [class="steam_app_"] $ws4
+assign [class="steam" title="Steam"] $ws5
 assign [class="vlc"] $ws6
 assign [class="Image Lounge"] $ws6
 assign [class="Zathura"] $ws7
@@ -135,6 +137,13 @@ for_window [class="Thunar" instance="thunar"] floating enable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
 for_window [class="Gnome-screenshot"] floating enable
 for_window [class="Nm-connection-editor"] floating enable
+for_window [class="steam" title="Friends List"] floating enable
+for_window [class="steam" title="News"] floating enable
+for_window [class="steam" title="Chat"] floating enable
+for_window [class="steam" title="Settings"] floating enable
+for_window [class="steam" title="Steam - Self Updater"] floating enable
+for_window [class="steam" title="Screenshot Uploader"] floating enable
+for_window [class="steam" title="Steam Guard - Computer Authorization Required"] floating enable
 
 # switch to workspace
 bindsym $mod+ampersand workspace number $ws1

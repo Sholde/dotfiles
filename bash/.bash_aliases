@@ -3,17 +3,14 @@
 #######################################
 
 # Sudo (to enable alias when using sudo command)
-alias sudo="sudo "
+alias sudo="sudo"
 
 # Reload configuration
 alias reload="source ~/.bashrc"
 
-# Clear and Show my startup message
-alias clear="clear && cat ~/.sholde"
-
 # Default
 alias df="df -h"                          # human-readable sizes
-alias free="free -m"                      # show sizes in MB
+alias free="free -ht"                     # show sizes in MB
 alias more="less"                         # less is better
 alias np="nano -w PKGBUILD"
 
@@ -25,6 +22,17 @@ alias fgrep="fgrep --color=auto"
 alias diff="diff --color=auto"
 alias pacman="pacman --color=auto"
 
+# pacman
+alias update="pacman -Syu"
+alias refresh="pacman -Syyu"
+alias unlock="sudo rm /var/lib/pacman/db.lck"
+
+# get fastest mirrors
+alias mirror="reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors="reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora="reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+
 # work
 alias cdwork="cd ~/Documents"
 
@@ -35,8 +43,7 @@ alias la="ls -a"
 alias lla="ls -lha"
 alias lsc="ls --format=single-column"
 alias lsca="ls --format=single-column -a"
-alias lt="ls -lh -S -1"
-alias left="ls -lh -t -1"
+alias l.="ls -a | grep -E '^\.'"
 ## octal permission
 ols() { stat -c "%A %a %n" ${@} ; }
 
@@ -48,28 +55,56 @@ alias c="clear"
 alias cp="cp -iv"
 alias mv="mv -iv"
 
+# mode
+alias mode="namei -l"
+
 # mkdir
 alias mkdir="mkdir -vp"
 
 # cd
+alias back="cd -"
+alias cd..="cd .."
 alias ..="cd .."
-alias .2="cd ../../"
-alias .3="cd ../../../"
-alias .4="cd ../../../../"
-alias .5="cd ../../../../.."
+parent() { for i in $(seq 1 ${1}); do cd .. ; done ; }
 
 # path
-alias path="echo ${PATH} | sed 's/:/\n/g'"
-alias ldpath="echo ${LD_LIBRARY_PATH} | sed 's/:/\n/g'"
-alias libpath="echo ${LIBRARY_PATH} | sed 's/:/\n/g'"
-alias cpath="echo ${CPATH} | sed 's/:/\n/g'"
+printpath() { echo ${1} | sed 's/:/\n/g' | sed '/^\s*$/d' ; }
+path() { printpath ${PATH} ; }
+ldpath() { printpath ${LD_LIBRARY_PATH} ; }
+libpath() { printpath ${LIBRARY_PATH} ; }
+cpath() { printpath ${CPATH} ; }
+manpath() { printpath ${MANPATH} ; }
 
-# top
-alias topmem="ps auxf | sort -nr -k 4 | head -1"
-alias topcpu="ps auxf | sort -nr -k 3 | head -1"
+# env
+alias omp="env | grep ^OMP_"
+alias mpi="env | grep ^MPI_"
+alias slu="env | grep ^SLURM_"
+alias grenv="env | grep"
+
+# make (avoid mistakes)
+alias maek="echo 'Try make'"
+alias mkae="echo 'Try make'"
+alias mkea="echo 'Try make'"
+
+# du
+alias duhs="du -hs *"
+
+# ps
+alias psa="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
+alias psmem='ps auxf | sort -nr -k 4'
+alias pscpu='ps auxf | sort -nr -k 3'
+
 
 # emacs
 alias emacs="emacs -nw"
+
+# avoid prank
+mesg n
+alias vi="emacs -nw"
+alias vim="emacs -nw"
+alias nvim="emacs -nw"
+alias sl="emacs -nw"
 
 # Find alias
 alias ff="find . -type f -iname"
@@ -80,12 +115,6 @@ locate() { find / -name ${1} 2> >(grep -v Permission) ; }
 
 # search expression in all file here
 search() { grep -n -re "${1}" * ; }
-
-# translate
-## translate fr to en
-tren() { trans -s fr -t en "${@}" ; }
-## translate en to fr
-trfr() { trans -s en -t fr "${@}" ; }
 
 # count
 ## count word in file
@@ -99,6 +128,8 @@ alias count="find . -type f | wc -l"
 alias cpuinfo="cat /proc/cpuinfo"
 alias meminfo="cat /proc/meminfo"
 alias zoneinfo="cat /proc/zoneinfo"
+alias os-release="cat /etc/os-release"
+os() { cat /etc/os-release | grep PRETTY_NAME | awk -F'"' '{print $2}' ; }
 
 # mount
 alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | grep -E ^/dev/ | sort"
@@ -112,18 +143,12 @@ alias gip="curl https://ifconfig.co"
 ## Local ip
 lip() { ip addr | grep inet | sed -n 2p | awk '{print $2}' | cut -d'/' -f1 ; }
 
-# UI
-alias tbmail="thunderbird 2> /dev/null &"
-alias discord="discord 2> /dev/null &"
-alias evince="evince ${1} 2> /dev/null"
-alias nomacs="nomacs ${1} 2> /dev/null"
-
 # lock screen
 alias lock="i3lock -i ~/Pictures/wallpapers/background/default.png"
 
 # tar
-alias tgz="tar -czvf"
-alias untar='tar -xzvf'
+alias tgz="tar -czf"
+alias untar='tar -xzf'
 
 # Debug mpi program
 mpidebug() { mpirun -np $1 xfce4-terminal -e "gdb $2" ; }
@@ -193,16 +218,13 @@ copy()
 
 #
 ## tarball - archive generator
-### usage: tarball <file> <directory>
-#### note: file is the name without suffix ".tar.gz"
+## usage: tarball <directory|file>
 tarball()
 {
-    if [ -d $2 ] ; then
-        cp -R $2 $1
-        tar -czvf $1.tar.gz $1
-        rm -Rf $1
+    if [ -d $1 ] || [ -f $1 ] ; then
+        tar -czf $1.tar.gz $1
     else
-        echo "'$2' in not a valid directory"
+        echo "'$1' in not a valid directory or file"
     fi
 }
 
@@ -224,6 +246,9 @@ ex()
             *.zip)       unzip $1     ;;
             *.Z)         uncompress $1;;
             *.7z)        7z x $1      ;;
+            *.deb)       ar x $1      ;;
+            *.tar.xz)    tar xf $1    ;;
+            *.tar.zst)   unzstd $1    ;;
             *)           echo "'$1' cannot be extracted via ex()" ;;
         esac
     else
@@ -235,4 +260,24 @@ ex()
 ecfunc()
 {
     cat ${1} | grep -P "^[a-zA-Z_]+[[:space:]]*[\*]?[a-zA-Z0-9_-]+\("
+}
+
+# Box print
+#blankline() { echo "" ; }
+boxprint()
+{
+    if [ ${#} -ne 1 ] ; then
+        echo "Error: expected string as argument"
+        return 1
+    fi
+    string=$1
+    hashtagline=$(echo -n "##" ; for i in `seq 2 $(echo "${string}" | wc -c)` ;  do echo -n '#' ; done ; echo "##")
+    stringwithhashtag=$(echo -n "# " ; echo -n ${string} ; echo " #")
+    blankline=$(echo "")
+
+    echo ${blankline}
+    echo ${hashtagline}
+    echo ${stringwithhashtag}
+    echo ${hashtagline}
+    echo ${blankline}
 }

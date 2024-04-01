@@ -28,6 +28,7 @@ function timer_now()
     date +%s%N
 }
 
+# Timer functions
 function timer_start()
 {
     timer_start=${timer_start:-$(timer_now)}
@@ -53,12 +54,22 @@ function timer_stop()
     unset timer_start
 }
 
+# Parse last error code
+function error_code()
+{
+    last_error=$(echo $?)
+    BLUE="\033[1;34m"
+    RED="\033[1;31m"
+    if [ ${last_error} -eq 0 ] ; then
+        echo -ne "${BLUE}[${last_error}]"
+    else
+        echo -ne "${RED}[${last_error}]"
+    fi
+}
+
 #######################################
 #               Script                #
 #######################################
-
-# Check if running interactively
-[[ $- != *i* ]] && return
 
 # Display new terminal message
 if [ "$(hostname)" == "nitro" ] ; then
@@ -69,52 +80,32 @@ else
     cat ~/.sholde
 fi
 
-# Bash completion
-[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
-
-# Change the window title of X terminals
-case ${TERM} in
-    xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-        PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
-        ;;
-    screen*)
-        PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
-        ;;
-esac
-
 # Time of the last command
 trap 'timer_start' DEBUG
-PROMPT_COMMAND+="; timer_stop"
+PROMPT_COMMAND="timer_stop"
 
-# Test if colorful terminal is used
-if [[ ${EUID} == 0 ]] ; then
-    PS1='[\u@\h \W]$(parse_git_branch) \$ '
-else
-    # PS1
-    PS1='\[\033[1;34m\][$?] '                                       # error
-    PS1+='\[\033[1;33m\]$(date +%H:%M:%S) '                         # time
-    PS1+='\[\033[01;32m\][\u@\h \[\033[1;34m\]\W\[\033[01;32m\]]'   # usual prompt
-    PS1+='\[\033[1;31m\]$(parse_git_branch)$(parse_git_status) '    # git
-    PS1+='\[\033[1;33m\](${timer_show}) '                           # delay
-
-    if [ $(id -u) -eq 0 ] ; then
-        PS1+='\[\033[1;31m\]#\[\033[00m\] '                         # root
-    else
-        PS1+='\[\033[01;32m\]\$\[\033[00m\] '                       # user
-    fi
-
-    # PS2
-    PS2='\[\033[01;32m\]continue ->\[\033[00m\] '
+YELLOW="\[\033[1;33m\]"
+GREEN="\[\033[01;32m\]"
+BLUE="\[\033[1;34m\]"
+RED="\[\033[1;31m\]"
+WHITE="\[\033[00m\]"
+# PS1
+PS1='$(error_code) '                                 # error
+PS1+="${YELLOW}"'$(date +%H:%M:%S) '                   # time
+PS1+="${GREEN}[\u@\h ${BLUE}\W${GREEN}]"             # usual prompt
+PS1+="${RED}"'$(parse_git_branch)$(parse_git_status) ' # git
+PS1+="${YELLOW}"'(${timer_show}) '                     # delay
+PS1+="\n"
+if [ $(id -u) -eq 0 ] ; then                         # root
+    PS1+="${RED}#${WHITE} "
+    PS2="${RED}#${WHITE} "
+else                                                 # user
+    PS1+="${GREEN}->${WHITE} "
+    PS2="${GREEN}->${WHITE} "
 fi
-
-# history length
-HISTSIZE=1000
-HISTFILESIZE=2000
 
 # Important
 xhost +local:root > /dev/null 2>&1
-
-complete -cf sudo
 
 #######################################
 #                SHOPT                #

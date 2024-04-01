@@ -3,7 +3,8 @@
 #######################################
 
 # export en language
-export LANG=en_US.utf8
+export LANG=en_US.UTF-8
+export LC_CTYPE="en_US.UTF-8"
 
 # man and less color
 export GROFF_NO_SGR=1
@@ -26,4 +27,8 @@ export LS_COLORS="$LS_COLORS:*.jpeg=1;35:*.jpg=1;35:*.gif=1;35:*.png=1;35:*.ppm=
 export LS_COLORS="$LS_COLORS:*.mp4=1;35:*.mkv=1;35:*.webm=1;35"
 
 # History
+export HISTSIZE=10000
+export HISTFILESIZE=20000
 export HISTTIMEFORMAT="%F %T "
+export HISTCONTROL=erasedups:ignoredups
+

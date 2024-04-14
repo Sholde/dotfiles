@@ -90,7 +90,6 @@ set_prompt()
     local WHITE="\[\033[00m\]"
 
     PS1='$(error_code) '                                   # error
-    PS1+="${YELLOW}"'$(date +%H:%M:%S) '                   # time
     PS1+="${GREEN}[\u@\h ${BLUE}\W${GREEN}] "              # usual prompt
     PS1+="${YELLOW}"'(${timer_show}) '                     # delay
     PS1+="${RED}"'$(parse_git_branch)$(parse_git_status)'  # git

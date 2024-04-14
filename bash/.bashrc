@@ -60,9 +60,9 @@ function timer_stop()
 # Parse last error code
 function error_code()
 {
-    last_error=$(echo $?)
-    BLUE="\033[1;34m"
-    RED="\033[1;31m"
+    local last_error=$(echo $?)
+    local BLUE="\033[1;34m"
+    local RED="\033[1;31m"
     if [ ${last_error} -eq 0 ] ; then
         echo -ne "${BLUE}[${last_error}]"
     else
@@ -73,10 +73,35 @@ function error_code()
 # Find if there is background jobs
 function count_jobs()
 {
-    PURPLE="\033[1;35m"
-    count=$(jobs | wc -l)
+    local PURPLE="\033[1;35m"
+    local count=$(jobs | wc -l)
     if [ ${count} -ne 0 ] ; then
         echo -ne "${PURPLE}{${count} jobs}"
+    fi
+}
+
+# Set prompt variables
+set_prompt()
+{
+    local YELLOW="\[\033[1;33m\]"
+    local GREEN="\[\033[01;32m\]"
+    local BLUE="\[\033[1;34m\]"
+    local RED="\[\033[1;31m\]"
+    local WHITE="\[\033[00m\]"
+
+    PS1='$(error_code) '                                   # error
+    PS1+="${YELLOW}"'$(date +%H:%M:%S) '                   # time
+    PS1+="${GREEN}[\u@\h ${BLUE}\W${GREEN}] "              # usual prompt
+    PS1+="${YELLOW}"'(${timer_show}) '                     # delay
+    PS1+="${RED}"'$(parse_git_branch)$(parse_git_status)'  # git
+    PS1+='$(count_jobs)'                                   # jobs
+    PS1+="\n"
+    if [ $(id -u) -eq 0 ] ; then                           # root
+        PS1+="${RED}#${WHITE} "
+        PS2="${RED}#${WHITE} "
+    else                                                   # user
+        PS1+="${GREEN}->${WHITE} "
+        PS2="${GREEN}->${WHITE} "
     fi
 }
 
@@ -97,26 +122,8 @@ fi
 trap 'timer_start' DEBUG
 PROMPT_COMMAND="timer_stop"
 
-YELLOW="\[\033[1;33m\]"
-GREEN="\[\033[01;32m\]"
-BLUE="\[\033[1;34m\]"
-RED="\[\033[1;31m\]"
-WHITE="\[\033[00m\]"
-# PS1
-PS1='$(error_code) '                                   # error
-PS1+="${YELLOW}"'$(date +%H:%M:%S) '                   # time
-PS1+="${GREEN}[\u@\h ${BLUE}\W${GREEN}] "              # usual prompt
-PS1+="${YELLOW}"'(${timer_show}) '                     # delay
-PS1+="${RED}"'$(parse_git_branch)$(parse_git_status)'  # git
-PS1+='$(count_jobs)'                                   # jobs
-PS1+="\n"
-if [ $(id -u) -eq 0 ] ; then                           # root
-    PS1+="${RED}#${WHITE} "
-    PS2="${RED}#${WHITE} "
-else                                                   # user
-    PS1+="${GREEN}->${WHITE} "
-    PS2="${GREEN}->${WHITE} "
-fi
+# Set prompt variables
+set_prompt
 
 # Important
 xhost +local:root > /dev/null 2>&1

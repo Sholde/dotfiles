@@ -117,9 +117,19 @@ else
     cat ~/.sholde
 fi
 
+# Change the window title of X terminals
+case ${TERM} in
+    xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
+        PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/\~}\007"'
+        ;;
+    screen*)
+        PROMPT_COMMAND='echo -ne "\033_${PWD/#$HOME/\~}\033\\"'
+        ;;
+esac
+
 # Time of the last command
 trap 'timer_start' DEBUG
-PROMPT_COMMAND="timer_stop"
+PROMPT_COMMAND+="; timer_stop"
 
 # Set prompt variables
 set_prompt

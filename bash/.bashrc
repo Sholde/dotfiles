@@ -9,7 +9,7 @@
 # Parse current git branch
 function parse_git_branch()
 {
-    git branch 2> /dev/null | grep -e '*' | sed -e 's/* \(.*\)/ (\1)/'
+    git branch 2> /dev/null | grep -e '*' | sed -e 's/* \(.*\)/(\1)/'
 }
 
 # Parse git status
@@ -19,6 +19,9 @@ function parse_git_status()
         echo -n "*"
     elif [[ $(git status --porcelain 2> /dev/null | grep -e "^??") != "" ]] ; then
         echo -n "+"
+    fi
+    if [ $(git branch 2> /dev/null | wc -l) -ne 0 ] ; then
+        echo -n " "
     fi
 }
 
@@ -67,6 +70,16 @@ function error_code()
     fi
 }
 
+# Find if there is background jobs
+function count_jobs()
+{
+    PURPLE="\033[1;35m"
+    count=$(jobs | wc -l)
+    if [ ${count} -ne 0 ] ; then
+        echo -ne "${PURPLE}{${count} jobs}"
+    fi
+}
+
 #######################################
 #               Script                #
 #######################################
@@ -90,16 +103,17 @@ BLUE="\[\033[1;34m\]"
 RED="\[\033[1;31m\]"
 WHITE="\[\033[00m\]"
 # PS1
-PS1='$(error_code) '                                 # error
+PS1='$(error_code) '                                   # error
 PS1+="${YELLOW}"'$(date +%H:%M:%S) '                   # time
-PS1+="${GREEN}[\u@\h ${BLUE}\W${GREEN}]"             # usual prompt
-PS1+="${RED}"'$(parse_git_branch)$(parse_git_status) ' # git
+PS1+="${GREEN}[\u@\h ${BLUE}\W${GREEN}] "              # usual prompt
 PS1+="${YELLOW}"'(${timer_show}) '                     # delay
+PS1+="${RED}"'$(parse_git_branch)$(parse_git_status)'  # git
+PS1+='$(count_jobs)'                                   # jobs
 PS1+="\n"
-if [ $(id -u) -eq 0 ] ; then                         # root
+if [ $(id -u) -eq 0 ] ; then                           # root
     PS1+="${RED}#${WHITE} "
     PS2="${RED}#${WHITE} "
-else                                                 # user
+else                                                   # user
     PS1+="${GREEN}->${WHITE} "
     PS2="${GREEN}->${WHITE} "
 fi

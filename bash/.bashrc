@@ -6,24 +6,27 @@
 #             Functions               #
 #######################################
 
-# Parse current git branch
-function parse_git_branch()
-{
-    git branch 2> /dev/null | grep -e '*' | sed -e 's/* \(.*\)/(\1)/'
-}
-
-# Parse git status
-function parse_git_status()
-{
-    if [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] ; then
-        echo -n "*"
-    elif [[ $(git status --porcelain 2> /dev/null | grep -e "^??") != "" ]] ; then
-        echo -n "+"
-    fi
-    if [ $(git branch 2> /dev/null | wc -l) -ne 0 ] ; then
-        echo -n " "
-    fi
-}
+# No more usefull
+## Parse current git branch
+#function parse_git_branch()
+#{
+#    git branch 2> /dev/null | grep -e '*' | sed -e 's/* \(.*\)/(\1)/'
+#}
+#
+## Parse git status
+#function parse_git_status()
+#{
+#    if [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] ; then
+#        echo -n "*"
+#    elif [[ $(git status --porcelain 2> /dev/null | grep -e "^??") != "" ]] ; then
+#        echo -n "+"
+#    fi
+#    if [ $(git branch 2> /dev/null | wc -l) -ne 0 ] ; then
+#        echo -n " "
+#    fi
+#}
+#
+#    PS1+="${RED}"'$(parse_git_branch)$(parse_git_status)'  # git
 
 # Get time of the last command
 function timer_now()
@@ -92,7 +95,7 @@ set_prompt()
     PS1='$(error_code) '                                   # error
     PS1+="${GREEN}[\u@\h ${BLUE}\W${GREEN}] "              # usual prompt
     PS1+="${YELLOW}"'(${timer_show}) '                     # delay
-    PS1+="${RED}"'$(parse_git_branch)$(parse_git_status)'  # git
+    PS1+="${RED}"'$(__git_ps1 "(%s) ")'                    # git
     PS1+='$(count_jobs)'                                   # jobs
     PS1+="\n"
     if [ $(id -u) -eq 0 ] ; then                           # root
@@ -115,6 +118,16 @@ elif [ "$(hostname)" == "nrv" ] ; then
     cat ~/.profile_nrv
 else
     cat ~/.sholde
+fi
+
+# Git completion
+if [ -f ~/.bash_git ] ; then
+    source ~/.bash_git
+    export GIT_PS1_SHOWCONFLICTSTATE=1
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWSTASHSTATE=1
+    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    export GIT_PS1_COMPRESSSPARSESTATE=1
 fi
 
 # Change the window title of X terminals
